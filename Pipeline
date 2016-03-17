@@ -1,0 +1,13 @@
+#Convert pair of fastq files to bam file
+#Note pair of fastq files must be separated by a comma (no space)
+#If input is a bam file, then change the inputformat to bam
+/apps/well/stampy/1.0.23-py2.7/stampy.py --genome /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/stampy2/reference_genomes --hash /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/stampy2/reference_genomes --threads 2 --bamkeepgoodreads --substitutionrate=0.05 --map /well/jknight/cyndi/metagenomics_data/P160016/data2/WTCHG_247272_225104_1.fastq,/well/jknight/cyndi/metagenomics_data/P160016/data2/WTCHG_247272_225104_2.fastq --gapopen 40 --gapextend 40 --bamsortmem 200000000 --inputformat fastq --outputformat sam --output /well/jknight/cyndi/metagenomics_data/P160016/data2/WTCHG_247272_225104.sam --overwrite
+
+#Convert sam file to sorted bam file
+samtools view -u -S /well/jknight/cyndi/metagenomics_data/P160016/unexpectedtags/WTCHG_247272_246230.sam | samtools sort - /well/jknight/cyndi/metagenomics_data/P160016/unexpectedtags/WTCHG_247272_246230_sorted
+samtools index /well/jknight/cyndi/metagenomics_data/P160016/unexpectedtags/WTCHG_247272_246230_sorted.bam
+
+#Run bammetrics.sh (includes MarkDuplicates)
+#Make output bam folder first e.g. /well/jknight/cyndi/metagenomics_data/P160016/analysis/D-results/05_bammetrics/WTCHG_247272_203227/ 
+
+./bammetrics.sh /well/jknight/cyndi/metagenomics_data/P160016/data2/WTCHG_247272_203227_sorted.bam /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/stampy2/reference_genomes.fasta /well/jknight/cyndi/metagenomics_data/P160016/analysis/D-results/05_bammetrics/WTCHG_247272_203227/ WTCHG_247272_203227
