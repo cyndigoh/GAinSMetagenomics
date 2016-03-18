@@ -1,0 +1,110 @@
+#Using samtools view to count the number of mapped reads to each reference
+
+#These all count the number of mapped reads to each plasmid/R0000173
+samtools view -c -F4 WTCHG_247272_x.sorted.bam HBV_plasmid
+samtools view -c -F4 WTCHG_247272_x.sorted.bam p1990_plasmid
+samtools view -c -F4 WTCHG_247272_x.sorted.bam p2022_plasmid
+samtools view -c -F4 WTCHG_247272_x.sorted.bam R00000173
+
+#This counts the total number of reads (mapped and unmapped)
+samtools view -c WTCHG_247272_x.sorted.bam 
+
+#This counts the total of mapped reads
+samtools view -c -F4 WTCHG_247272_x.sorted.bam 
+
+#This ERCC search DOES not work correctly
+samtools view -c -F4 WTCHG_247272_x.sorted.bam ERCC 
+
+#This counts the number of mapped reads to each ERCC
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00002
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00003
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00004
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00009
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00012
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00013
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00014
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00016
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00017
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00019
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00022
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00024
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00025
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00028
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00031
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00033
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00034
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00035
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00039
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00040
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00041
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00042
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00043
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00044
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00046
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00048
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00051
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00053
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00054
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00057
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00058
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00059
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00060
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00061
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00062
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00067
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00069
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00071
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00073
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00074
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00075
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00076
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00077
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00078
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00079
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00081
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00083
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00084
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00085
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00086
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00092
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00095
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00096
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00097
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00098
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00099
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00104
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00108
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00109
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00111
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00112
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00113
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00116
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00117
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00120
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00123
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00126
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00130
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00131
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00134
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00136
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00137
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00138
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00142
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00143
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00144
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00145
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00147
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00148
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00150
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00154
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00156
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00157
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00158
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00160
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00162
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00163
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00164
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00165
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00168
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00170
+samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00171
