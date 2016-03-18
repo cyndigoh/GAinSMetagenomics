@@ -3,7 +3,7 @@
 #$ -cwd
 #$ -q short.qc 
 #$ -P jknight.prjc
-#$ -N P160016_stampymaphuman2
+#$ -N P160016_stampymaphuman958_972_control
 #$ -o /well/jknight/cyndi/metagenomics_data/P160016/qsub_logs
 #$ -e /well/jknight/cyndi/metagenomics_data/P160016/qsub_logs
 #$ -pe shmem 2
@@ -11,7 +11,7 @@
 source ~/.bashrc
 sh /apps/well/profile.d/python/2.7.sh
 
-for tag in "242104" "208250" "250274" "227104" "203227" "243104" "225251" "251275" ; do
+for tag in "228104" "204228" "244104" "226252" 252276" "229104" "205229" "245104" "227253" "253277" "230104" "206230" "246104" "228254" "254278"; do
   /apps/well/stampy/1.0.23-py2.7/stampy.py \
   --genome /well/jknight/reference/GRCh37_cont/stampy/hs37d5c2 \
   --hash /well/jknight/reference/GRCh37_cont/stampy/hs37d5c2 \
