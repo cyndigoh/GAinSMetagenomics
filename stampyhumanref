@@ -11,14 +11,14 @@
 source ~/.bashrc
 sh /apps/well/profile.d/python/2.7.sh
 
-for tag in "228104" "204228" "244104" "226252" 252276" "229104" "205229" "245104" "227253" "253277" "230104" "206230" "246104" "228254" "254278"; do
+for tag in "202104" "242226" "203104" "243227" "204104" "244228" "205104" "245229" "206104" "246230"; do
   /apps/well/stampy/1.0.23-py2.7/stampy.py \
   --genome /well/jknight/reference/GRCh37_cont/stampy/hs37d5c2 \
   --hash /well/jknight/reference/GRCh37_cont/stampy/hs37d5c2 \
   --threads 2 \
   --bamkeepgoodreads \
   --substitutionrate=0.05 \
-  --map /well/jknight/cyndi/metagenomics_data/P160016/data2/WTCHG_247272_${tag}_1.fastq,/well/jknight/cyndi/metagenomics_data/P160016/data2/WTCHG_247272_${tag}_2.fastq \
+  --map /well/jknight/cyndi/metagenomics_data/P160016/unexpectedtags/WTCHG_247272_${tag}_1.fastq,/well/jknight/cyndi/metagenomics_data/P160016/unexpectedtags/WTCHG_247272_${tag}_2.fastq \
   --gapopen 40 \
   --gapextend 40 \
   --bamsortmem 200000000 \
