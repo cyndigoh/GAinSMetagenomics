@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# this export PATH is needed for samtools
+export PATH=/apps/well/samtools/0.1.19/bin:${PATH}
+echo ^^^ `date`
+echo ^^^ export PATH=/usr/local/genetics/bin:${PATH}
+export PATH=/usr/local/genetics/bin:${PATH}
+
+inbamdir=${1}
+reflocus=${2}
+outfile=${3}
+outprefix=${4}
+echo ^^^ inbampath ${inbampath}
+echo ^^^ refpath ${refpath}
+echo ^^^ outdir ${outdir}
+echo ^^^ outprefix ${outprefix}
+echo ^^^ `date`
+
+samtools view -c -F4 ${inbamdir}/{bamfile} {reflocus} | {bamfile}> ${outfile}
+
+exit
