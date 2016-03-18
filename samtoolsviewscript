@@ -1,4 +1,4 @@
-#This works
+#This works with the following command ./samtools_noheader.sh /well/jknight/cyndi/metagenomics_data/P160016/data2/WTCHG_247272_230104_sorted.bam > /well/jknight/cyndi/metagenomics_data/P160016/analysis/D-results/06_samtoolsview/230104.txt
 #!/bin/bash
 
 inbamfile=${1}
