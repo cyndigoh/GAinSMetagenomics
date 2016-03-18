@@ -1,0 +1,15 @@
+#Stampy script for aligning to human reference genome hs37d5
+/apps/well/stampy/1.0.23-py2.7/stampy.py \
+--genome /well/jknight/reference/GRCh37_cont/stampy/hs37d5c2 \
+--hash /well/jknight/reference/GRCh37_cont/stampy/hs37d5c2 \
+--threads 2 \
+--bamkeepgoodreads \
+--substitutionrate=0.05 \
+--map /well/jknight/cyndi/metagenomics_data/P160016/data2/WTCHG_247272_225104_1.fastq,/well/jknight/cyndi/metagenomics_data/P160016/data2/WTCHG_247272_225104_2.fastq \
+--gapopen 40 \
+--gapextend 40 \
+--bamsortmem 200000000 \
+--inputformat fastq \
+--outputformat sam \
+--output /well/jknight/cyndi/metagenomics_data/P160016/data2/maphuman/WTCHG_247272_225104.sam \
+--overwrite
