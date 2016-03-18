@@ -6,15 +6,6 @@ samtools view -c -F4 WTCHG_247272_x.sorted.bam p1990_plasmid
 samtools view -c -F4 WTCHG_247272_x.sorted.bam p2022_plasmid
 samtools view -c -F4 WTCHG_247272_x.sorted.bam R00000173
 
-#This counts the total number of reads (mapped and unmapped)
-samtools view -c WTCHG_247272_x.sorted.bam 
-
-#This counts the total of mapped reads
-samtools view -c -F4 WTCHG_247272_x.sorted.bam 
-
-#This ERCC search DOES not work correctly
-samtools view -c -F4 WTCHG_247272_x.sorted.bam ERCC 
-
 #This counts the number of mapped reads to each ERCC
 samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00002
 samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00003
@@ -108,3 +99,12 @@ samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00165
 samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00168
 samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00170
 samtools view -c -F4 WTCHG_247272_x_sorted.bam ERCC-00171
+
+#This counts the total number of reads (mapped and unmapped)
+samtools view -c WTCHG_247272_x.sorted.bam 
+
+#This counts the total of mapped reads
+samtools view -c -F4 WTCHG_247272_x.sorted.bam 
+
+#NB This ERCC search DOES not work correctly
+samtools view -c -F4 WTCHG_247272_x.sorted.bam ERCC 
