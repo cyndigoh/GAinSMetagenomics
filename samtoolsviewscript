@@ -1,21 +1,41 @@
+#This works
 #!/bin/bash
 
-# this export PATH is needed for samtools
-export PATH=/apps/well/samtools/0.1.19/bin:${PATH}
-echo ^^^ `date`
-echo ^^^ export PATH=/usr/local/genetics/bin:${PATH}
-export PATH=/usr/local/genetics/bin:${PATH}
+inbamfile=${1}
 
-inbamdir=${1}
-reflocus=${2}
-outfile=${3}
-outprefix=${4}
-echo ^^^ inbampath ${inbampath}
-echo ^^^ refpath ${refpath}
-echo ^^^ outdir ${outdir}
-echo ^^^ outprefix ${outprefix}
-echo ^^^ `date`
+for reflocus in "HBV_plasmid" "p1990_plasmid" "p2022_plasmid" "R00000173" "ERCC-00002" ; do 
+  echo Read count ${reflocus}
+  samtools view -c -F4 ${inbamfile} ${reflocus}
 
-samtools view -c -F4 ${inbamdir}/{bamfile} {reflocus} | {bamfile}> ${outfile}
+echo "samtools view -c" ${inbamfile}
+samtools view -c ${inbamfile}
+echo "samtools view -c -F4" ${inbamfile}
+samtools view -c -F4 ${inbamfile}
+done
 
-exit
+
+#Scratchpad...
+
+#!/bin/bash
+
+inbamfile=${1}
+
+for reflocus in "HBV_plasmid" "p1990_plasmid" "p2022_plasmid" "R00000173" "ERCC-00002" ; do 
+  echo Read count ${reflocus}
+  samtools view -c -F4 ${inbamfile} ${reflocus}
+
+echo "samtools view -c" ${inbamfile}
+samtools view -c ${inbamfile}
+echo "samtools view -c -F4" ${inbamfile}
+samtools view -c -F4 ${inbamfile}
+done
+
+#Output a tsv table of reflocus, readcount
+read_count=
+done
+
+  bash /well/jknight/cyndi/scripts/samtools.sh $1 $reflocus
+
+ ${inbamdir}/{bamfile} {reflocus} | {bamfile}> ${outfile}
+
+bamfile=`ls W*_sorted.bam`
