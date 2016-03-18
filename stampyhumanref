@@ -3,7 +3,7 @@
 #$ -cwd
 #$ -q short.qc 
 #$ -P jknight.prjc
-#$ -N P160016_stampymaphuman
+#$ -N P160016_stampymaphuman2
 #$ -o /well/jknight/cyndi/metagenomics_data/P160016/qsub_logs
 #$ -e /well/jknight/cyndi/metagenomics_data/P160016/qsub_logs
 #$ -pe shmem 2
