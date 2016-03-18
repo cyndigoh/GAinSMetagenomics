@@ -11,33 +11,21 @@
 source ~/.bashrc
 sh /apps/well/profile.d/python/2.7.sh
 
-echo Started analysis at : `date`
-/apps/well/stampy/1.0.23-py2.7/stampy.py \
---genome /well/jknight/reference/GRCh37_cont/stampy/hs37d5c2 \
---hash /well/jknight/reference/GRCh37_cont/stampy/hs37d5c2 \
---threads 2 \
---bamkeepgoodreads \
---substitutionrate=0.05 \
---map /well/jknight/cyndi/metagenomics_data/P160016/data2/WTCHG_247272_225104_1.fastq,/well/jknight/cyndi/metagenomics_data/P160016/data2/WTCHG_247272_225104_2.fastq \
---gapopen 40 \
---gapextend 40 \
---bamsortmem 200000000 \
---inputformat fastq \
---outputformat sam \
---output /well/jknight/cyndi/metagenomics_data/P160016/data2/maphuman/WTCHG_247272_225104.sam \
---overwrite
+for tag in "226104" "202226"; do
+  /apps/well/stampy/1.0.23-py2.7/stampy.py \
+  --genome /well/jknight/reference/GRCh37_cont/stampy/hs37d5c2 \
+  --hash /well/jknight/reference/GRCh37_cont/stampy/hs37d5c2 \
+  --threads 2 \
+  --bamkeepgoodreads \
+  --substitutionrate=0.05 \
+  --map /well/jknight/cyndi/metagenomics_data/P160016/data2/WTCHG_247272_${tag}_1.fastq,/well/jknight/cyndi/metagenomics_data/P160016/data2/WTCHG_247272_${tag}_2.fastq \
+  --gapopen 40 \
+  --gapextend 40 \
+  --bamsortmem 200000000 \
+  --inputformat fastq \
+  --outputformat sam \
+  --output /well/jknight/cyndi/metagenomics_data/P160016/data2/maphuman/WTCHG_247272_${tag}.sam \
+  --overwrite
+done
 
-/apps/well/stampy/1.0.23-py2.7/stampy.py \
---genome /well/jknight/reference/GRCh37_cont/stampy/hs37d5c2 \
---hash /well/jknight/reference/GRCh37_cont/stampy/hs37d5c2 \
---threads 2 \
---bamkeepgoodreads \
---substitutionrate=0.05 \
---map /well/jknight/cyndi/metagenomics_data/P160016/data2/WTCHG_247272_201225_1.fastq,/well/jknight/cyndi/metagenomics_data/P160016/data2/WTCHG_247272_201225_2.fastq \
---gapopen 40 \
---gapextend 40 \
---bamsortmem 200000000 \
---inputformat fastq \
---outputformat sam \
---output /well/jknight/cyndi/metagenomics_data/P160016/data2/maphuman/WTCHG_247272_201225.sam \
---overwrite
+
