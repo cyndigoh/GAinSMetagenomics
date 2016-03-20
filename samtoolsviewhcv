@@ -13,7 +13,7 @@ source ~/.bashrc
 sh /apps/well/profile.d/python/2.7.sh
 
 for inbamfile in "241104" "207249" "249273" "226104" "202226" "242104" "208250" "250274" "227104" "203227" "243104" "225251" "251275" "228104" "204228" "244104" "226252" "252276" "229104" "205229" "245104" "227253" "253277" "230104" "206230" "246104" "228254" "254278"; do
-  samtools view -c -F4 /well/jknight/cyndi/metagenomics_data/P160016/data2/WTCHG_247272_{inbamfile}_sorted.bam R00000173:1-9360
+  samtools view -c -F4 /well/jknight/cyndi/metagenomics_data/P160016/data2/WTCHG_247272_${inbamfile}_sorted.bam R00000173:1-9360
 done
 
 #"202104" "242226" "203104" "243227" "204104" "244228" "205104" "245229" "206104" "246230"
