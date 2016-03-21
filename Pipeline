@@ -13,3 +13,8 @@ samtools index /well/jknight/cyndi/metagenomics_data/P160016/data2/maphuman/WTCH
 #Make output bam folder first e.g. /well/jknight/cyndi/metagenomics_data/P160016/analysis/D-results/05_bammetrics/WTCHG_247272_203227/ 
 
 ./bammetrics.sh /well/jknight/cyndi/metagenomics_data/P160016/data2/WTCHG_247272_203227_sorted.bam /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/stampy2/reference_genomes.fasta /well/jknight/cyndi/metagenomics_data/P160016/analysis/D-results/05_bammetrics/WTCHG_247272_203227/ WTCHG_247272_203227
+
+#Individual tools:
+Add read groups --> sort --> index
+sorted.bam --> sorted.RG.bam --> RG.sort.bam
+DepthOfCoverage uses RG.sort.bam as the input file
