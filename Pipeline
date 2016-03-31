@@ -1,4 +1,9 @@
 # 1. Run fastQC for each sample (both L + R reads together)
+First concatenate fastq_1 and fastq_2
+cat WTCHG_247272_246230_1.fastq WTCHG_247272_246230_2.fastq > WTCHG_247272_246230.fastq
+
+Then from storage-bsg (doesn't work from dylan)
+fastqc WTCHG_247272_202104.fastq --outdir /well/jknight/cyndi/metagenomics_data/P160016/analysis/D-results/04_fastqc/
 
 # 2. Align/map pair of fastq files (or a bam file) to a reference, generating a sam file
 # Note pair of fastq files must be separated by a comma (no space)
