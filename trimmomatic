@@ -8,3 +8,12 @@ WTCHG_247272_230104_1.fastq WTCHG_247272_230104_2.fastq 230104_1_trimpaired.fast
 230104_1_trimunpaired.fastq 230104_2_trimpaired.fastq 230104_2_trimunpaired.fastq \
 ILLUMINACLIP:TruSeq3-PE-2.fa:2:40:15 MINLEN:36
 
+java -jar /apps/well/trimmomatic/0.32/trimmomatic-0.32.jar PE -phred33 -threads 2 -trimlog logfile230104_3010 \
+WTCHG_247272_230104_1.fastq WTCHG_247272_230104_2.fastq 230104_1_trimpaired3010.fastq \
+230104_1_trimunpaired3010.fastq 230104_2_trimpaired3010.fastq 230104_2_trimunpaired3010.fastq \
+ILLUMINACLIP:TruSeq3-PE-2.fa:2:30:10 MINLEN:36
+
+java -jar /apps/well/trimmomatic/0.32/trimmomatic-0.32.jar PE -phred33 -threads 2 -trimlog logfile246104 \
+WTCHG_247272_246104_1.fastq WTCHG_247272_246104_2.fastq 246104_1_trimpaired.fastq \
+246104_1_trimunpaired.fastq 246104_2_trimpaired.fastq 246104_2_trimunpaired.fastq \
+ILLUMINACLIP:TruSeq3-PE-2.fa:2:40:15 MINLEN:36
