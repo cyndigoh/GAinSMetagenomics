@@ -1,0 +1,10 @@
+/apps/well/trimmomatic/0.32/trimmomatic-0.32.jar
+
+/apps/well/trimmomatic/0.32/adapters/NexteraPE-PE.fa 
+/apps/well/trimmomatic/0.32/adapters/TruSeq3-PE-2.fa
+
+java -jar /apps/well/trimmomatic/0.32/trimmomatic-0.32.jar PE -phred33 -threads 2 -trimlog logfile230104 \
+WTCHG_247272_230104_1.fastq WTCHG_247272_230104_2.fastq 230104_1_trimpaired.fastq \
+230104_1_trimunpaired.fastq 230104_2_trimpaired.fastq 230104_2_trimunpaired.fastq \
+ILLUMINACLIP:TruSeq3-PE-2.fa:2:40:15 MINLEN:36
+
