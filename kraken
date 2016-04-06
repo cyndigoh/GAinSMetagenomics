@@ -1,0 +1,23 @@
+UK01140075.recal.bam
+
+#Extract unmapped reads from bamfile
+samtools view -b -f 4 /well/hill/kate/exomes/recal/cap270-sepsis300/UK01140075.recal.bam > UK01140075_unmapped.bam
+
+#Convert bam to fastq using bedtools
+/apps/well/bedtools/2.24.0-18-gb0bc5b7/bin/bamToFastq -bam UK01140075_unmapped.bam -fq1 UK01140075_unmappedR1.fastq -fq2 UK01140075_unmappedR2.fastq
+bamToFastq -bam file_unmapped.bam -fq1 unmappedR1.fastq -fq2 unmappedR2.fastq
+
+#Kraken
+To run kraken: first do the actual classification. Example is for
+paired-end reads, it seems to be essential to use --preload or it just
+sits there forever because the DB is so slow reading from disk. This
+will need as much memory as the size of the database, which is about
+68Gb for the standard database.
+
+kraken --db standard --threads 1 --preload --paired --output
+sample.taxonomy sample_1.fastq.gz sample_2.fastq.gz &> sample.taxonomy.log
+
+Then you can quickly run kraken-report to parse the read taxonomies into
+a summary which is printed to stdout:
+/users/donnelly/batty/bin/kraken-report --db standard sample.taxonomy >
+sample.taxonomy.report
