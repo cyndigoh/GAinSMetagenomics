@@ -1,7 +1,15 @@
-For HCV sample:
+Script to run on cluster:
 
-#Extract unmapped reads from bamfile
-samtools view -b -f 4 /well/jknight/cyndi/metagenomics_data/P160016/data2/maphuman/WTCHG_247272_245104_sorted.bam > 245105_unmapped.bam
+Commands (non-cluster):
+
+#Extract paired unmapped reads from bamfile
+samtools view -b -f13 /well/hill/kate/exomes/stampy/cap270/${line}.bam > /well/jknight/cyndi/exomes/${line}_unmapped.bam
+
+#Sort bamfile
+samtools sort -n /well/jknight/cyndi/exomes/${line}_unmapped.bam /well/jknight/cyndi/exomes/${line}_unmapped.qsort
+
+#Convert bamfile to pair of fastq's 
+/apps/well/bedtools/2.24.0-18-gb0bc5b7/bin/bamToFastq -i /well/jknight/cyndi/exomes/${line}_unmapped.qsort.bam -fq /well/jknight/cyndi/exomes/${line}_unmappedR1.fastq -fq2 /well/jknight/cyndi/exomes/${line}_unmappedR2.fastq
 
 #Convert bam to fastq using bedtools
 /apps/well/bedtools/2.24.0-18-gb0bc5b7/bin/bamToFastq -i UK05200064_unmapped.qsort.bam -fq UK05200064_unmappedR1.fastq -fq2 UK05200064_unmappedR2.fastq
