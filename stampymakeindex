@@ -1,0 +1,5 @@
+#Creating stampy genome file (.stidx)
+/apps/well/stampy/1.0.23-py2.7/stampy.py -G /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/stampy1aHQ/reference_genome /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/stampy1aHQ/reference_genome.fasta
+
+#Creating stampy hash file (.sthash)
+/apps/well/stampy/1.0.23-py2.7/stampy.py -g /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/stampy1aHQ/reference_genome -H /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/stampy1aHQ/reference_genome
