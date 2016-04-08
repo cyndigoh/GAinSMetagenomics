@@ -1,0 +1,5 @@
+#Extract reads which have not mapped to the human reference genome
+samtools view -b -f4 /well/jknight/cyndi/metagenomics_data/P160016/data2/maphuman/WTCHG_247272_225104_sorted.bam > /well/jknight/cyndi/metagenomics_data/P160016/data2/maphuman/WTCHG_247272_225104_nothuman.bam
+
+#Map this bam file containing unmapped reads to fasta containing HCV (closest match + polyT tail excluded), plasmid, ERCC
+
