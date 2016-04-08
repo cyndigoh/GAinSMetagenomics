@@ -1,3 +1,4 @@
+#For mapping to 1a_AF HCV genome
 #Extracts reads which have not mapped to the human reference genome then maps the resulting bam file containing unmapped reads to a fasta containing HCV (closest match + polyT tail excluded), plasmid, ERCC
 
 #!/bin/bash
@@ -21,6 +22,42 @@ for tag in "228104" "204228" "244104" "226252" "252276" "204104" "244228"; do
   /apps/well/stampy/1.0.23-py2.7/stampy.py \
   --genome /well/jknight/cyndi/metagenomics_data_P160016/reference_genomes/stampy1aAF/reference_genome \
   --hash /well/jknight/cyndi/metagenomics_data_P160016/reference_genomes/stampy1aAF/reference_genome \
+  --threads 2 \
+  --bamkeepgoodreads \
+  --substitutionrate=0.05 \
+  --map /well/jknight/cyndi/metagenomics_data/P160016/data2/bamnonhuman/WTCHG_247272_${tag}_nothuman.bam \
+  --gapopen 40 \
+  --gapextend 40 \
+  --bamsortmem 200000000 \
+  --inputformat bam \
+  --outputformat sam \
+  --output /well/jknight/cyndi/metagenomics_data/P160016/data2/remap/WTCHG_247272_${tag}.sam \
+  --overwrite
+done
+
+#For mapping to 1a_HQ HCV genome (HCV146, 371, 953, 972 + control)
+
+#!/bin/bash
+#$ -cwd
+#$ -q short.qc 
+#$ -P jknight.prjc
+#$ -N P160016remap
+#$ -o /well/jknight/cyndi/metagenomics_data/P160016/qsub_logs
+#$ -e /well/jknight/cyndi/metagenomics_data/P160016/qsub_logs
+#$ -pe shmem 2
+
+# this export PATH is needed for samtools
+export PATH=/apps/well/samtools/0.1.19/bin:${PATH}
+export PATH=/usr/local/genetics/bin:${PATH}
+
+source ~/.bashrc
+sh /apps/well/profile.d/python/2.7.sh
+
+for tag in "228104" "204228" "244104" "226252" "252276" "204104" "244228"; do
+  samtools view -b -f4 /well/jknight/cyndi/metagenomics_data/P160016/data2/maphuman/WTCHG_247272_${tag}_sorted.bam > /well/jknight/cyndi/metagenomics_data/P160016/data2/bamnonhuman/WTCHG_247272_${tag}_nothuman.bam
+  /apps/well/stampy/1.0.23-py2.7/stampy.py \
+  --genome /well/jknight/cyndi/metagenomics_data_P160016/reference_genomes/stampy1aHQ/reference_genome \
+  --hash /well/jknight/cyndi/metagenomics_data_P160016/reference_genomes/stampy1aHQ/reference_genome \
   --threads 2 \
   --bamkeepgoodreads \
   --substitutionrate=0.05 \
