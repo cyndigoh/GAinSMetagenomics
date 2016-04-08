@@ -1,14 +1,13 @@
 #Extract reads which have not mapped to the human reference genome
-samtools view -b -f4 /well/jknight/cyndi/metagenomics_data/P160016/data2/maphuman/WTCHG_247272_225104_sorted.bam > /well/jknight/cyndi/metagenomics_data/P160016/data2/maphuman/WTCHG_247272_225104_nothuman.bam
+samtools view -b -f4 /well/jknight/cyndi/metagenomics_data/P160016/data2/maphuman/WTCHG_247272_225104_sorted.bam > /well/jknight/cyndi/metagenomics_data/P160016/data2/bamnonhuman/WTCHG_247272_225104_nothuman.bam
 
 #Map this bam file containing unmapped reads to fasta containing HCV (closest match + polyT tail excluded), plasmid, ERCC
 
-#Stampy script for aligning to human reference genome hs37d5
 #!/bin/bash
 #$ -cwd
 #$ -q short.qc 
 #$ -P jknight.prjc
-#$ -N P160016_stampymaphuman958_972_control
+#$ -N P160016remap
 #$ -o /well/jknight/cyndi/metagenomics_data/P160016/qsub_logs
 #$ -e /well/jknight/cyndi/metagenomics_data/P160016/qsub_logs
 #$ -pe shmem 2
@@ -16,20 +15,19 @@ samtools view -b -f4 /well/jknight/cyndi/metagenomics_data/P160016/data2/maphuma
 source ~/.bashrc
 sh /apps/well/profile.d/python/2.7.sh
 
-for tag in "202104" "242226" "203104" "243227" "204104" "244228" "205104" "245229" "206104" "246230"; do
+for tag in "228104" "204228" "244104" "226252" "252276" "204104" "244228"; do
   /apps/well/stampy/1.0.23-py2.7/stampy.py \
-  --genome /well/jknight/reference/GRCh37_cont/stampy/hs37d5c2 \
-  --hash /well/jknight/reference/GRCh37_cont/stampy/hs37d5c2 \
+  --genome /well/jknight/cyndi/metagenomics_data_P160016/reference_genomes/stampy1aAF \
+  --hash /well/jknight/cyndi/metagenomics_data_P160016/reference_genomes/stampy1aAF \
   --threads 2 \
   --bamkeepgoodreads \
   --substitutionrate=0.05 \
-  --map /well/jknight/cyndi/metagenomics_data/P160016/unexpectedtags/WTCHG_247272_${tag}_1.fastq,/well/jknight/cyndi/metagenomics_data/P160016/unexpectedtags/WTCHG_247272_${tag}_2.fastq \
+  --map /well/jknight/cyndi/metagenomics_data/P160016/data2/bamnonhuman/WTCHG_247272_${tag}_nothuman.bam \
   --gapopen 40 \
   --gapextend 40 \
   --bamsortmem 200000000 \
   --inputformat fastq \
   --outputformat sam \
-  --output /well/jknight/cyndi/metagenomics_data/P160016/data2/maphuman/WTCHG_247272_${tag}.sam \
+  --output /well/jknight/cyndi/metagenomics_data/P160016/data2/remap/WTCHG_247272_${tag}.sam \
   --overwrite
 done
-
