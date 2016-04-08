@@ -1,7 +1,4 @@
-#Extract reads which have not mapped to the human reference genome
-samtools view -b -f4 /well/jknight/cyndi/metagenomics_data/P160016/data2/maphuman/WTCHG_247272_225104_sorted.bam > /well/jknight/cyndi/metagenomics_data/P160016/data2/bamnonhuman/WTCHG_247272_225104_nothuman.bam
-
-#Map this bam file containing unmapped reads to fasta containing HCV (closest match + polyT tail excluded), plasmid, ERCC
+#Extracts reads which have not mapped to the human reference genome then maps the resulting bam file containing unmapped reads to a fasta containing HCV (closest match + polyT tail excluded), plasmid, ERCC
 
 #!/bin/bash
 #$ -cwd
@@ -16,6 +13,7 @@ source ~/.bashrc
 sh /apps/well/profile.d/python/2.7.sh
 
 for tag in "228104" "204228" "244104" "226252" "252276" "204104" "244228"; do
+  samtools view -b -f4 /well/jknight/cyndi/metagenomics_data/P160016/data2/maphuman/WTCHG_247272_228104_sorted.bam > /well/jknight/cyndi/metagenomics_data/P160016/data2/bamnonhuman/WTCHG_247272_228104_nothuman.bam
   /apps/well/stampy/1.0.23-py2.7/stampy.py \
   --genome /well/jknight/cyndi/metagenomics_data_P160016/reference_genomes/stampy1aAF \
   --hash /well/jknight/cyndi/metagenomics_data_P160016/reference_genomes/stampy1aAF \
@@ -26,7 +24,7 @@ for tag in "228104" "204228" "244104" "226252" "252276" "204104" "244228"; do
   --gapopen 40 \
   --gapextend 40 \
   --bamsortmem 200000000 \
-  --inputformat fastq \
+  --inputformat bam \
   --outputformat sam \
   --output /well/jknight/cyndi/metagenomics_data/P160016/data2/remap/WTCHG_247272_${tag}.sam \
   --overwrite
