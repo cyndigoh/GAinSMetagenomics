@@ -30,6 +30,8 @@ echo ^^^ outprefix ${outprefix}
 echo ^^^ `date`
 
 # Set up all output file paths here. 
+localrefpath=${outdir}/${outprefix}.reference.fasta
+localrefdictpath=${outdir}/${outprefix}.reference.dict
 localrefindexpath=${outdir}/${outprefix}.reference.fasta.fai
 outbiasmetricspath=${outdir}/${outprefix}.GcBiasMetrics.txt
 outbiaschartpath=${outdir}/${outprefix}.GcBiasMetrics.pdf
