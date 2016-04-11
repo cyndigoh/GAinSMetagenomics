@@ -1,4 +1,4 @@
-/apps/well/bedtools/2.24.0-18-gb0bc5b7/bin/bamToFastq -i /well/jknight/cyndi/metagenomics_data/P160016/data2/bamnonhuman/WTCHG_247272_204104_nothuman.bam -fq /well/jknight/cyndi/metagenomics_data/P160016/data2/bamnonhuman/WTCHG_247272_204104_nonh_R1.fastq -fq2 /well/jknight/cyndi/metagenomics_data/P160016/data2/bamnonhuman/WTCHG_247272_204104_nonh_R2.fastq
+/apps/well/bedtools/2.24.0-18-gb0bc5b7/bin/bamToFastq -i /well/jknight/cyndi/metagenomics_data/P160016/data2/bamnonhuman/WTCHG_247272_204104_nothuman.bam -fq /well/jknight/cyndi/metagenomics_data/P160016/data2/bamnonhuman/WTCHG_247272_204104_noth_R1.fastq -fq2 /well/jknight/cyndi/metagenomics_data/P160016/data2/bamnonhuman/WTCHG_247272_204104_noth_R2.fastq
 
 #For mapping to 1a_AF HCV genome
 #Extracts reads which have not mapped to the human reference genome then maps the resulting bam file containing unmapped reads to a fasta containing HCV (closest match + polyT tail excluded), plasmid, ERCC
