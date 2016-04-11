@@ -1,0 +1,148 @@
+#!/bin/bash
+#Don't forget to create WTCHG_247272_x folder in analysis/D-results/05_bammetrics first
+
+if [ $# -lt 4 ] ; then
+    printf "Usage:   bammetrics.sh inbampath refpath outdir outprefix\n"
+    printf "         Recalibrate the base qualities then generate base quality metrics\n"
+    printf "Example: ./bammetrics.sh /well/jknight/cyndi/metagenomics_data/P160016/data2/WTCHG_247272_203227_sorted.bam /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/stampy2/reference_genomes.fasta /well/jknight/c$
+    printf "\n"
+    exit
+fi
+
+Xmx=13G
+
+
+# this export PATH is needed for samtools
+export PATH=/apps/well/samtools/0.1.19/bin:${PATH}
+echo ^^^ `date`
+echo ^^^ export PATH=/usr/local/genetics/bin:${PATH}
+export PATH=/usr/local/genetics/bin:${PATH}
+
+inbampath=${1}
+refpath=${2}
+outdir=${3}
+outprefix=${4}
+echo ^^^ inbampath ${inbampath}
+echo ^^^ refpath ${refpath}
+echo ^^^ outdir ${outdir}
+echo ^^^ outprefix ${outprefix}
+echo ^^^ `date`
+
+# Set up all output file paths here. 
+localrefindexpath=${outdir}/${outprefix}.reference.fasta.fai
+outbiasmetricspath=${outdir}/${outprefix}.GcBiasMetrics.txt
+outbiaschartpath=${outdir}/${outprefix}.GcBiasMetrics.pdf
+outmeanqbycpath=${outdir}/${outprefix}.MeanQualityByCycle.txt
+outmeanqbycchartpath=${outdir}/${outprefix}.MeanQualityByCycle.pdf
+qualscoredistpath=${outdir}/${outprefix}.QualityScoreDistribution.txt
+qualscoredistchartpath=${outdir}/${outprefix}.QualityScoreDistribution.pdf
+summarymetrics=${outdir}/${outprefix}.CollectAlignmentSummaryMetrics.txt
+depthofcoveragepath=${outdir}/${outprefix}.DepthOfCoverage
+bamwithreadgroups=${outdir}/${outprefix}.RG.bam
+bamwithreadgroups_sort=${outdir}/${outprefix}.RG.sort
+bamwithreadgroups_sort_bam=${bamwithreadgroups_sort}.bam
+duplremov_bam=${outdir}/${outprefix}.duplremov.bam
+markduplicatesmetrics=${outdir}/dupl_metrics.txt
+
+# Need to create local symbolic link to the reference fasta
+# because the original one doesn't have a .fasta suffix
+# and GATK won't recognise it without the suffix
+if [ ! -f ${localrefpath} ] ; then
+    ln -s ${refpath} ${localrefpath}
+fi
+if [ ! -f ${localrefdictpath} ] ; then
+    echo ^^^ CreateSequenceDictionary
+    java -jar /apps/well/picard-tools/1.111/CreateSequenceDictionary.jar \
+    R= ${localrefpath} O= ${localrefdictpath}
+fi
+if [ ! -f ${localrefindexpath} ] ; then
+    echo ^^^ CreateFastaIndex
+    samtools faidx ${localrefpath}
+fi
+
+#Add read groups to bam file for GATK and then sort/index
+echo ^^^ AddReadGroups
+java -Xmx$Xmx -jar /apps/well/picard-tools/1.111/\
+AddOrReplaceReadGroups.jar \
+INPUT=${inbampath} \
+OUTPUT=${bamwithreadgroups} \
+RGID=1 \
+RGLB=${outprefix} \
+RGPL=Illumina \
+RGPU=lane1 \
+RGSM=HCV
+
+echo ^^^ `date`
+
+echo ^^^ sort
+
+samtools sort ${bamwithreadgroups} ${bamwithreadgroups_sort}
+
+echo ^^^ `date`
+
+echo ^^^ index
+
+samtools index ${bamwithreadgroups_sort}.bam
+
+echo ^^^ `date`
+
+echo ^^^ DepthOfCoverage
+java -Xmx$Xmx -jar /apps/well/gatk/3.2-2/\
+GenomeAnalysisTK.jar \
+-T DepthOfCoverage \
+-R ${localrefpath} \
+-I ${bamwithreadgroups_sort_bam} \
+-o ${depthofcoveragepath}
+echo ^^^ `date`
+
+
+# run picard QC metrics on clean mapped files
+echo ^^^ CollectGcBiasMetrics
+java -Xmx$Xmx -jar /apps/well/picard-tools/1.111/\
+CollectGcBiasMetrics.jar \
+INPUT=${inbampath} \
+OUTPUT=${outbiasmetricspath} \
+CHART_OUTPUT=${outbiaschartpath} \
+REFERENCE_SEQUENCE=${localrefpath} \
+VALIDATION_STRINGENCY=SILENT
+echo ^^^ `date`
+
+echo ^^^ MeanQualityByCycle
+java -Xmx$Xmx -jar /apps/well/picard-tools/1.111/\
+MeanQualityByCycle.jar \
+INPUT=${inbampath} \
+OUTPUT=${outmeanqbycpath} \
+CHART_OUTPUT=${outmeanqbycchartpath} \
+REFERENCE_SEQUENCE=${localrefpath} \
+VALIDATION_STRINGENCY=SILENT
+echo ^^^ `date`
+
+echo ^^^ QualityScoreDistribution
+java -Xmx$Xmx -jar /apps/well/picard-tools/1.111/\
+QualityScoreDistribution.jar \
+INPUT=${inbampath} \
+OUTPUT=${qualscoredistpath} \
+CHART_OUTPUT=${qualscoredistchartpath} \
+REFERENCE_SEQUENCE=${localrefpath} \
+VALIDATION_STRINGENCY=SILENT
+echo ^^^ `date`
+
+echo ^^^ CollectAlignmentSummaryMetrics
+java -Xmx$Xmx -jar /apps/well/picard-tools/1.111/\
+CollectAlignmentSummaryMetrics.jar \
+INPUT=${inbampath} \
+OUTPUT=${summarymetrics} \
+REFERENCE_SEQUENCE=${localrefpath} \
+VALIDATION_STRINGENCY=SILENT
+echo ^^^ `date`
+
+echo ^^^ MarkDuplicates
+java -Xmx$Xmx -jar /apps/well/picard-tools/1.111/\
+MarkDuplicates.jar \
+INPUT= ${bamwithreadgroups_sort_bam} \
+OUTPUT=${duplremov_bam} \
+METRICS_FILE=${outdir}/dupl_metrics.txt
+echo ^^^ `date`
+
+
+exit
