@@ -1,0 +1,28 @@
+#Stampy script for aligning trimmed reads to human+non-human refs
+#!/bin/bash
+#$ -cwd
+#$ -q short.qc 
+#$ -P jknight.prjc
+#$ -N stampytrim
+#$ -o /well/jknight/cyndi/metagenomics_data/P160016/qsub_logs
+#$ -e /well/jknight/cyndi/metagenomics_data/P160016/qsub_logs
+#$ -pe shmem 2
+
+source ~/.bashrc
+sh /apps/well/profile.d/python/2.7.sh
+
+
+/apps/well/stampy/1.0.23-py2.7/stampy.py \
+--genome /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/stampy1aAFall/reference_genome \
+--hash /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/stampy1aAFall/reference_genome \
+--threads 2 \
+--bamkeepgoodreads \
+--substitutionrate=0.05 \
+--map /well/jknight/cyndi/metagenomics_data/P160016/data/trim/228104_1_trimunpaired.fastq,/well/jknight/cyndi/metagenomics_data/P160016/data/trim/228104_2_trimunpaired.fastq \
+--gapopen 40 \
+--gapextend 40 \
+--bamsortmem 200000000 \
+--inputformat fastq \
+--outputformat sam \
+--output /well/jknight/cyndi/metagenomics_data/P160016/data/trim/WTCHG_247272_228104_trimunpaired.sam \
+--overwrite
