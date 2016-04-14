@@ -1,0 +1,8 @@
+Insert sizes can only be estimated when both reads of a fragment have been mapped
+samtools view -f66 file.bam|cut -f 9|sed 's/^-//' > InsertSizeMetrics.txt
+
+CF prep:
+DNA-DNA
+RNA-RNA
+Mixed 1
+Mixed 2
