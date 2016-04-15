@@ -1,3 +1,10 @@
+# ./samtoolsbwamap.sh /well/jknight/cyndi/metagenomics_data/P160016/data/bwamapped/WTCHG_247272_225104_sorted.bam
+#!/bin/bash
+
+inbamfile=${1}
+
+while reflocus in 
+
 #This works with the following command ./samtools_noheader.sh /well/jknight/cyndi/metagenomics_data/P160016/data2/WTCHG_247272_230104_sorted.bam > /well/jknight/cyndi/metagenomics_data/P160016/analysis/D-results/06_samtoolsview/230104.txt
 #!/bin/bash
 
