@@ -1,0 +1,1 @@
+/apps/well/bwa/0.7.12/bwa mem -M -t 2 /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/bwa1aAFall/ref.fasta /well/jknight/cyndi/metagenomics_data/P160016/data/fastq/WTCHG_247272_228104_1.fastq /well/jknight/cyndi/metagenomics_data/P160016/data/fastq/WTCHG_247272_228104_2.fastq > /well/jknight/cyndi/metagenomics_data/P160016/data/bwamapped/WTCHG_247272_228104.sam
