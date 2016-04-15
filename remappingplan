@@ -1,18 +1,19 @@
 #Create single fasta file containing the human and non-human reference genomes
 cat /well/bsg/microbial/data/references/wtchgR00000091/wtchgR00000091.fasta /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/stampy1aAF/reference_genome.fasta > /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/bwa1aAFall/ref.fasta
+cat /well/bsg/microbial/data/references/wtchgR00000091/wtchgR00000091.fasta /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/stampy1aHQ/reference_genome.fasta > /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/bwa1aHQall/ref.fasta
+
+#Reference /well/bsg/microbial/data/references/wtchgR00000091
+#This is NCBI Human Genome build 38, with all the alternative mappings plus the EBV sample. All chromosomes, and fragments, are concatenated together in order. There is no soft masking (i.e., Ns in place of the actual nucleotides) in the sample. All bases are in upper case.
+
+#Create bwa indices
+/apps/well/bwa/0.7.12/bwa index ref.fasta
 
 #Take original fastq's from /well/jknight/cyndi/metagenomics_data/P160016/data/fastq
+/apps/well/bwa/0.7.12/bwa mem -M -t 2 /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/bwa1aAFall/ref.fasta /well/jknight/cyndi/metagenomics_data/P160016/data/fastq/WTCHG_247272_228104_1.fastq /well/jknight/cyndi/metagenomics_data/P160016/data/fastq/WTCHG_247272_228104_2.fastq > /well/jknight/cyndi/metagenomics_data/P160016/data/bwamapped/WTCHG_247272_228104.sam
 
-#Map to human reads using bowtie or bwa mem
-#Reference /well/bsg/microbial/data/references/wtchgR00000091
-#This is NCBI Human Genome build 38, with all the alternative mappings plus the EBV sample.
-All chromosomes, and fragments, are concatenated together in order. There is no soft masking
-(i.e., Ns in place of the actual nucleotides) in the sample. All bases are in upper case.
 
-#Extract unmapped reads (either count a read as mapped if BOTH map or at least one maps)
 
-#Map to non-human references using stampy or other
-#Reference /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/stampy1aAF or /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/stampy1aHQ
+
 
 
 
