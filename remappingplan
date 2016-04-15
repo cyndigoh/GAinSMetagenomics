@@ -1,3 +1,6 @@
+#Create single fasta file containing the human and non-human reference genomes
+cat /well/bsg/microbial/data/references/wtchgR00000091/wtchgR00000091.fasta /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/stampy1aAF/reference_genome.fasta > /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/bwa1aAFall/ref.fasta
+
 #Take original fastq's from /well/jknight/cyndi/metagenomics_data/P160016/data/fastq
 
 #Map to human reads using bowtie or bwa mem
