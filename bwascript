@@ -1,1 +1,24 @@
-/apps/well/bwa/0.7.12/bwa mem -M -t 2 /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/bwa1aAFall/ref.fasta /well/jknight/cyndi/metagenomics_data/P160016/data/fastq/WTCHG_247272_228104_1.fastq /well/jknight/cyndi/metagenomics_data/P160016/data/fastq/WTCHG_247272_228104_2.fastq > /well/jknight/cyndi/metagenomics_data/P160016/data/bwamapped/WTCHG_247272_228104.sam
+#!/usr/bin/env bash
+#$ -cwd
+#$ -q short.qc
+#$ -P jknight.prjc
+#$ -N bwa1aAF
+#$ -o /well/jknight/cyndi/metagenomics_data/P160016/qsub_logs
+#$ -e /well/jknight/cyndi/metagenomics_data/P160016/qsub_logs
+#$ -pe shmem 2
+
+
+
+# this export PATH is needed for samtools
+export PATH=/apps/well/samtools/0.1.19/bin:${PATH}
+export PATH=/usr/local/genetics/bin:${PATH}
+
+FILE=/well/jknight/cyndi/scripts/1aAF.txt
+
+while read line; do
+  /apps/well/bwa/0.7.12/bwa mem -M -t 2 /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/bwa1aAFall/ref.fasta /well/jknight/cyndi/metagenomics_data/P160016/data/fastq/WTCHG_247272_228104_1.fastq /well/jknight/cyndi/metagenomics_data/P160016/data/fastq/WTCHG_247272_228104_2.fastq > /well/jknight/cyndi/metagenomics_data/P160016/data/bwamapped/WTCHG_247272_228104.sam
+  
+  #Sort bamfile
+  
+done < /well/jknight/cyndi/exomes/exomelist.txt
+
