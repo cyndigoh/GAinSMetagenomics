@@ -1,0 +1,42 @@
+#Script to run on cluster using samtools bitwise flags to calculate number of reads for the various reference genomes
+#samtoolsbwa.sh
+#requires a samplelist.txt with the names of the files
+#don't forget that the HCV958 sample is mapped to a different HCV genome and therefore will need different reflist
+
+#!/usr/bin/env bash
+#$ -cwd
+#$ -q short.qc
+#$ -P jknight.prjc
+#$ -N samtoolsbwa
+#$ -o /well/jknight/cyndi/metagenomics_data/P160016/qsub_logs
+#$ -e /well/jknight/cyndi/metagenomics_data/P160016/qsub_logs
+#$ -pe shmem 2
+
+# this export PATH is needed for samtools
+export PATH=/apps/well/samtools/0.1.19/bin:${PATH}
+export PATH=/usr/local/genetics/bin:${PATH}
+
+FILE=/well/jknight/cyndi/scripts/samplelist.txt
+
+while read line; do
+        /well/jknight/cyndi/scripts/samtoolsbwamap.sh /well/jknight/cyndi/metagenomics_data/P160016/data/bwamapped/WTCHG_247272_${line}_sorted.bam > /well/jknight/cyndi/metagenomics_data/P160016/analysis/bwareadcount/$$
+done < /well/jknight/cyndi/scripts/samplelist.txt
+
+#samtoolsbwamap.sh
+#!/bin/bash
+
+inbamfile=${1}
+
+FILE=/well/jknight/cyndi/scripts/reflist.txt
+
+#NB F260 = F4 + 256 (counts reads mapped as primary alignment)
+while read reflocus; do
+  samtools view -c -F260 ${inbamfile} ${reflocus}
+done < /well/jknight/cyndi/scripts/reflist.txt
+
+samtools view -c -F256 ${inbamfile}
+
+samtools view -c -F260 ${inbamfile}
+
+
+
