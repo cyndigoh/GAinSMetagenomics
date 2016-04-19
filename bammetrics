@@ -4,8 +4,8 @@
 if [ $# -lt 4 ] ; then
     printf "Usage:   bammetrics.sh inbampath refpath outdir outprefix\n"
     printf "         Recalibrate the base qualities then generate base quality metrics\n"
-    printf "Example: ./bammetrics.sh /well/jknight/cyndi/metagenomics_data/P160016/data2/WTCHG_247272_203227_sorted.bam /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/stampy2/reference_genomes.fasta \
-    /well/jknight/cyndi/metagenomics_data/P160016/analysis/D-results/05_bammetrics/WTCHG_247272_203227/ WTCHG_247272_203227"
+    printf "Example: ./bammetrics.sh /well/jknight/cyndi/metagenomics_data/P160016/data/bwamapped/WTCHG_247272_228104_sorted.bam /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/bwa1aAFall/ref.fasta \
+    /well/jknight/cyndi/metagenomics_data/P160016/analysis/D-results/05_bammetrics/WTCHG_247272_228104/ WTCHG_247272_228104"
     printf "\n"
     exit
 fi
