@@ -1,5 +1,6 @@
 #!/bin/bash
 #Don't forget to create WTCHG_247272_x folder in analysis/D-results/05_bammetrics first
+#Doesn't seem to run from florence/dylan
 
 if [ $# -lt 4 ] ; then
     printf "Usage:   bammetrics.sh inbampath refpath outdir outprefix\n"
