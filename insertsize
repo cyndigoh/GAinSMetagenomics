@@ -1,8 +1,23 @@
-Insert sizes can only be estimated when both reads of a fragment have been mapped
-samtools view -f66 file.bam|cut -f 9|sed 's/^-//' > InsertSizeMetrics.txt
+#/well/jknight/cyndi/scripts/insertsize.sh
 
-CF prep:
-DNA-DNA
-RNA-RNA
-Mixed 1
-Mixed 2
+#!/usr/bin/env bash
+#$ -cwd
+#$ -q short.qc
+#$ -P jknight.prjc
+#$ -N runinsertsize
+#$ -o /well/jknight/cyndi/metagenomics_data/P160016/qsub_logs
+#$ -e /well/jknight/cyndi/metagenomics_data/P160016/qsub_logs
+#$ -pe shmem 2
+
+# this export PATH is needed for samtools
+export PATH=/apps/well/samtools/0.1.19/bin:${PATH}
+export PATH=/usr/local/genetics/bin:${PATH}
+
+FILE=/well/jknight/cyndi/scripts/fullsamplelist.txt
+
+while read line; do
+  samtools view -f66 /well/jknight/cyndi/metagenomics_data/P160016/data/bwamapped/WTCHG_247272_${line}_sorted.bam|cut -f 9|sed 's/^-//' > /well/jknight/cyndi/metagenomics_data/P160016/analysis/insertsize/${line}.txt
+done < /well/jknight/cyndi/scripts/fullsamplelist.txt
+
+#Insert sizes can only be estimated when both reads of a fragment have been mapped
+
