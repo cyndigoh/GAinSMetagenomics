@@ -1,0 +1,53 @@
+#readdepth.sh
+#command line to run this script ./readdepth.sh /well/jknight/cyndi/metagenomics_data/P160016/data/bwamapped/WTCHG_247272_206104_sorted.bam mixed /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/HCV_closest_refs/1a_HQ850279short.fasta 1a_HQ850279 /well/jknight/cyndi/metagenomics_data/P160016/analysis/readdepth/206104.tsv
+
+#!/usr/bin/env bash
+
+if [ $# -lt 5 ] ; then
+    echo "Usage: readdepth.sh inbam libprep refpath refid outtable"
+    exit 1
+fi
+inbam=$1
+libprep=$2
+refpath=$3
+refid=$4
+outtable=$5
+
+# intermediate files
+tmpsam=`echo ${inbam} | sed "s,.bam,.tmp.sam,g"`
+tmpbam=`echo ${inbam} | sed "s,.bam,.tmp.bam,g"`
+
+# Use samtools view and grep to extract a BAM file that contains only the header and the HCV records
+
+echo "samtools view -H ${inbam} > ${tmpsam}"
+      samtools view -H ${inbam} > ${tmpsam}
+if [ $? -ne 0 ] ; then
+     echo "Failed: samtools view -H ${inbam} > ${tmpsam}"
+     exit 2
+fi
+
+echo "samtools view ${inbam} | grep ${refid} >> ${tmpsam}"
+      samtools view ${inbam} | grep ${refid} >> ${tmpsam}
+if [ $? -ne 0 ] ; then
+     echo "Failed: samtools view ${inbam} | grep ${refid} >> ${tmpsam}"
+     exit 3
+fi
+
+echo "samtools view -b -S -o ${tmpbam} ${tmpsam}"
+      samtools view -b -S -o ${tmpbam} ${tmpsam}
+if [ $? -ne 0 ] ; then
+     echo "Failed: samtools view -b -S -o ${tmpbam} ${tmpsam}"
+     exit 4
+fi
+
+# Use bamdepth to get a tsv file of depths (including the zero ones)
+exptid=`basename ${inbam} | sed "s,.bam,,g"`
+echo "/well/bsg/microbial/mgtools/bamdepth.py ${tmpbam} ${refpath} ${exptid} 1 1 1 0 ${outtable}"
+      /well/bsg/microbial/mgtools/bamdepth.py ${tmpbam} ${refpath} ${exptid} 1 1 1 0 ${outtable}
+if [ $? -ne 0 ] ; then
+     echo "Failed: /well/bsg/microbial/mgtools/bamdepth.py ${tmpbam} ${refpath} ${exptid} 1 1 1 0 ${outtable}"
+     exit 5
+fi
+
+# Might need to use sed to make sure the tsv file you end up with contains columns:
+# samplename, libraryprep, ref, pos, readdepth
