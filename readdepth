@@ -21,7 +21,7 @@ done < /well/jknight/cyndi/scripts/samplelist.txt
 #SCRIPT 2: readdepth.sh
 #!/usr/bin/env bash
 
-if [ $# -lt 5 ] ; then
+if [ $# -lt 4 ] ; then
     echo "Usage: onesampledepth.sh inbam refpath refid outtable"
     exit 1
 fi
