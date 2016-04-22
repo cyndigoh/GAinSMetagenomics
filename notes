@@ -15,6 +15,10 @@ Failed: samtools view -b -S -o WTCHG_247272_253277_new_sorted.tmp.bam WTCHG_2472
 
 Tried remapping to generate new sam file but still doesn't work.
 
+The script in /well/jknight/cyndi/scripts/readdepth.sh and runreaddepth.sh doesn't work - needs debugging
+
+(readdepth.sh is an updated version of onesampledepth.sh)
+
 Calculating insert sizes
 HCV972: Used randkeep.py to randomly select top 1% of insert sizes (as R wasn't able to cope with the large number of reads)
 Removed the "zeros" and any insert size > 1000 (there a handful 40-50000) 
