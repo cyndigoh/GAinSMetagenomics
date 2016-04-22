@@ -1,0 +1,22 @@
+Data analysis 22042016
+- Read depth across HCV genome
+Unable to get onesampledepth.sh script to work for sample 253277 (works for the remaining 8 HCV972 samples)
+Error message: :145138636
+@SQ	SN:chr9	LN:138394717
+@SQ	SN:chr10	LN:133797422
+@SQ	SN:chr11	LN:135086622
+@SQ	SN:chr12	LN:133275309
+@SQ	SN:chr13	LN:114364328
+@SQ	SN:chr14	LN:107043718
+@SQ	SN:chr15	LN:101991189
+@S1' is recognized as '*'.
+[main_samview] truncated file.
+Failed: samtools view -b -S -o WTCHG_247272_253277_new_sorted.tmp.bam WTCHG_247272_253277_new_sorted.tmp2.sam
+
+Tried remapping to generate new sam file but still doesn't work.
+
+Calculating insert sizes
+HCV972: Used randkeep.py to randomly select top 1% of insert sizes (as R wasn't able to cope with the large number of reads)
+Removed the "zeros" and any insert size > 1000 (there a handful 40-50000) 
+
+In the CF plot, I used all the reads from CF RNA and CF Mixed2 as 1% of reads didn't have many reads
