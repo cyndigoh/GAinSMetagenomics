@@ -1,0 +1,162 @@
+library(GeneRave)
+cov<-read.delim("covariates_265samples_noNA.txt", header=TRUE, row.names=1) #265 54
+data.265<-read.delim("normsig.265.5.txt", header=TRUE, row.names=1)  #26185 265
+data.265.t<-t(data.265)
+
+#Remove columns corresponding to sample ID and days to death (includes NA) cluster and H1N1 etc
+out<-which(colnames(cov)=="Sample.ID" | 
+             colnames(cov)=="APACHE" |
+             colnames(cov)=="Survival_14days" |
+             colnames(cov)=="Survival_28days" | 
+             colnames(cov)=="Survival_6months" | 
+             colnames(cov)=="Days_to_death" | 
+             colnames(cov)=="Days_ICU" |
+             colnames(cov)=="RNA_sampling_day" |
+             colnames(cov)=="H1N1" |
+             colnames(cov)=="Inotropic.support_days" |
+             colnames(cov)=="Renal_support_days" |
+             colnames(cov)=="SOFA_max" |
+             colnames(cov)=="SOFA_sampling_day" |
+             colnames(cov)=="Activated_protein_C" |
+             colnames(cov)=="Cluster" |
+             colnames(cov)=="Microbiology_summary" |
+             colnames(cov)=="Viral")
+
+cov.viral<-cov[,-out] #265 38
+
+#Which covaraites can be used to predict viral infection
+
+fitHG.cov<-HGglm(as.matrix(cov.viral), cov$Viral, model="B")
+colnames(cov.viral)[fitHG.cov$varids[-1]]
+"Polynucleocytes_raw" "FIO2"                "Haematocrit"         "Temp_low"            "Resp_rate"          
+ "Inotropes" 
+
+#Include probes differentially expressed between viral and non-viral patients
+de.vir<-read.delim("DE genes viral IPA mapped.txt.", header=FALSE) #59
+data.265.vir<-data.265.t[,as.character(de.vir[,1])] #265 59
+
+#Restrict to high expression (>6.5) in viral patients (25)
+data.265.vir.a<-as.matrix(data.265.vir)
+b.265<-which(data.265.vir.a<6.5, arr.ind=T)
+data.265.vir.a[b.265]<-0
+c.265<-which(data.265.vir.a>0, arr.ind=T)
+data.265.vir.a[c.265]<-1
+d<-apply(data.265.vir.a,2,sum) 
+
+expression<-which(d>=25) #51 out of 59 probes
+
+data.265.vir.exp<-data.265.vir[,expression] #265 51
+
+fitHG.exp<-HGglm(as.matrix(data.265.vir.exp), cov$Viral, model="B")
+colnames(data.265.vir.exp)[fitHG.exp$varids[-1]]
+"3990170" "1340020" "4890270" "5310605" "3400551" "520059" 
+
+
+viral<-cov$Viral
+viral<-gsub("0", "No", viral)
+viral<-gsub("1", "Yes", viral)
+p1<-xyplot(as.numeric(data.265["520059",])~ as.factor(viral), jitter.x=TRUE, xlab=list(label="Cluster", cex=1.5), ylab=list(label=expression(italic(DYRK2)~expression), cex=1.5), scales=list(cex=1.5), cex=0.8)+
+  as.layer(bwplot(as.numeric(data.265["520059",]) ~ as.factor(viral), col="transparent", par.settings=list(plot.symbol=list(col="transparent"))))
+
+
+#Leave one out method for testing covariate only model
+mod.cov<-cov.viral[,colnames(cov.viral)[fitHG.cov$varids[-1]]]
+mod.cov$Viral<-cov$Viral
+dim(mod.cov) #265 8
+
+results.cov<-matrix(ncol=2, nrow=265)
+results.cov[,1]<-cov$Viral
+for(i in 1:265){
+  mod<-mod.cov[-i,]
+  model<-glm(Viral ~., data=mod, family=binomial(logit))
+  prediction<-predict.glm(model, newdata=mod.cov[i, 1:6], type="response")
+  results.cov[i,2]<-prediction
+}
+table(results.cov[,1], results.cov[,2]>0.5)
+#FALSE TRUE
+#0   234   6
+#1    20   5
+#MR 9.8%
+
+#Leave one out method for testing expression model
+mod.exp<-data.265.vir.exp[,colnames(data.265.vir.exp)[fitHG.exp$varids[-1]]] #265 4
+mod.exp<-data.frame(mod.exp)
+mod.exp$Viral<-cov$Viral #265 7
+
+results.exp<-matrix(ncol=2, nrow=265)
+results.exp[,1]<-cov$Viral
+for(i in 1:265){
+  mod<-mod.exp[-i,]
+  model<-glm(Viral ~., data=mod, family=binomial(logit))
+  prediction<-predict.glm(model, newdata=mod.exp[i, 1:6], type="response")
+  results.exp[i,2]<-prediction
+}
+table(results.exp[,1], results.exp[,2]>0.5)
+
+#FALSE TRUE
+#0   234   6
+#1    18   7
+#9.1%
+
+#Leave one out method for testing covariate and expression model (selected from the separate HgGlm models)
+mod.cov.exp<-cbind(mod.cov, mod.exp) 
+#Remove the extra Survival_virdays column (column 7)
+mod.cov.exp<-mod.cov.exp[,-7] #265 12
+
+results.cov.exp<-matrix(ncol=2, nrow=265)
+results.cov.exp[,1]<-cov$Viral
+for(i in 1:265){
+  mod<-mod.cov.exp[-i,]
+  model<-glm(Viral ~., data=mod, family=binomial(logit))
+  prediction<-predict.glm(model, newdata=mod.cov.exp[i, 1:12], type="response")
+  results.cov.exp[i,2]<-prediction
+}
+
+table(results.cov.exp[,1], results.cov.exp[,2]>0.5)
+#FALSE TRUE
+#0   228   12
+#1    15   10
+#10.2%
+
+
+#Plot roc curve to display results of models
+library(ROCR)
+
+#Create a prediction object using prediction(predictions, true class labels)
+pred.cov<-prediction(results.cov[,2], results.cov[,1])
+#Evaluate the prediction. For a roc curve, the measure = "tpr" (tue positive rate) and the x.measure = "fpr" (false positive rate)
+perf.cov<-performance(pred.cov, "tpr", "fpr")
+#Determine the area under the curve (AUC)
+auc.cov<-performance(pred.cov, "auc")@y.values #0.82
+
+pred.exp<-prediction(results.exp[,2], results.exp[,1])
+perf.exp<-performance(pred.exp, "tpr", "fpr")
+auc.exp<-performance(pred.exp, "auc")@y.values #0.89
+
+pred.cov.exp<-prediction(results.cov.exp[,2], results.cov.exp[,1])
+perf.cov.exp<-performance(pred.cov.exp, "tpr", "fpr")
+auc.cov.exp<-performance(pred.cov.exp, "auc")@y.values #0.91
+
+pdf("roc_viral_adjcov_highexp.pdf", width=15, height=9)
+par(xpd =TRUE, mar=c(5,5,4,20), cex.axis=2, cex.lab=2)
+plot(perf.cov, lwd=4)
+plot(perf.exp, add=TRUE, col=2, lwd=4)
+plot(perf.cov.exp, add=TRUE, col="turquoise", lwd=4)
+legend("topright", inset=c(-0.38,0), title="Model (AUC)", c("Covariates (0.82)", "Probe expression (0.89)", "Covariates and \nprobe expression (0.91)"), lty=c(1,1), col=c(1, 2, "turquoise"), cex=1.5)
+dev.off()
+
+
+
+
+
+pdf("roc_14day_6month.pdf", width=15, height=9)
+par(xpd =TRUE, mar=c(5,5,4,20), cex.axis=2, cex.lab=2)
+plot(perf.cov, lwd=4)
+plot(perf.exp, add=TRUE, col=2, lwd=4)
+plot(perf.cov.exp, add=TRUE, col="turquoise", lwd=4)
+legend("topright", inset=c(-0.38,0), title=" Model (AUC)", c("Covariates (0.86)", "Probe expression (0.93)", "Covariates and \nprobe expression (0.95)"), lty=c(1,1), lwd=4, col=c(1, 2, "turquoise"), cex=1.5)
+dev.off()
+
+
+###########################################################################
+
