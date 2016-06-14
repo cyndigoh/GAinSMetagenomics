@@ -1,6 +1,9 @@
 library(GeneRave)
+#read covariate data
 cov<-read.delim("covariates_265samples_noNA.txt", header=TRUE, row.names=1) #265 54
+#read gene exp data
 data.265<-read.delim("normsig.265.5.txt", header=TRUE, row.names=1)  #26185 265
+#transpose the matrix
 data.265.t<-t(data.265)
 
 #Remove columns corresponding to sample ID and days to death (includes NA) cluster and H1N1 etc
@@ -24,7 +27,7 @@ out<-which(colnames(cov)=="Sample.ID" |
 
 cov.viral<-cov[,-out] #265 38
 
-#Which covaraites can be used to predict viral infection
+#Which covariates can be used to predict viral infection
 
 fitHG.cov<-HGglm(as.matrix(cov.viral), cov$Viral, model="B")
 colnames(cov.viral)[fitHG.cov$varids[-1]]
