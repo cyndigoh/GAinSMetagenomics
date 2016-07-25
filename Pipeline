@@ -1,3 +1,9 @@
+Pre-processing
+1. Download files into required folder e.g. /well/jknight/cyndi/metagenomics_data/P160325/A-rawdata from FTP link
+wget ftp://tmitanar:atygo-minot-13@bsg-ftp.well.ox.ac.uk/160719_K00198_0079_BHFGFKBBXX/*
+
+2. 
+
 # 1. Run fastQC for each sample (both L + R reads together)
 First concatenate fastq_1 and fastq_2
 cat WTCHG_247272_246230_1.fastq WTCHG_247272_246230_2.fastq > WTCHG_247272_246230.fastq
