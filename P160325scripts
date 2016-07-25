@@ -1,0 +1,57 @@
+bwa1aHQ.sh
+#!/usr/bin/env bash
+#$ -cwd
+#$ -q short.qc
+#$ -P jknight.prjc
+#$ -N bwa1aHQ
+#$ -o /well/jknight/cyndi/qsub_logs
+#$ -e /well/jknight/cyndi/qsub_logs
+#$ -pe shmem 2
+
+
+
+# this export PATH is needed for samtools
+export PATH=/apps/well/samtools/0.1.19/bin:${PATH}
+export PATH=/usr/local/genetics/bin:${PATH}
+
+#list of sample index names
+FILE=/well/jknight/cyndi/metagenomics_data/P160325/C-scripts/1aHQ.txt
+
+while read tag; do
+  #map with bwa
+  /apps/well/bwa/0.7.12/bwa mem -M -t 2 /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/bwa1aHQall/ref.fasta /well/jknight/cyndi/metagenomics_data/P160325/A-rawdata/fastq/WTCHG_296582_${tag}_1.fastq.gz /well/jknight/cyndi/metagenomics_data/P160325/A-rawdata/fastq/WTCHG_296582_${tag}_2.fastq.gz > /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/WTCHG_296582_${tag}.sam 
+  
+  #Sort and index
+  samtools view -u -S /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/WTCHG_296582_${tag}.sam | samtools sort - /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/WTCHG_296582_${tag}_sorted
+  samtools index /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/WTCHG_296582_${tag}_sorted.bam
+  
+done < /well/jknight/cyndi/metagenomics_data/P160325/C-scripts/1aHQ.txt
+
+bwa1aAF.sh
+#!/usr/bin/env bash
+#$ -cwd
+#$ -q short.qc
+#$ -P jknight.prjc
+#$ -N bwa1aAF
+#$ -o /well/jknight/cyndi/qsub_logs
+#$ -e /well/jknight/cyndi/qsub_logs
+#$ -pe shmem 2
+
+
+
+# this export PATH is needed for samtools
+export PATH=/apps/well/samtools/0.1.19/bin:${PATH}
+export PATH=/usr/local/genetics/bin:${PATH}
+
+#list of sample index names
+FILE=/well/jknight/cyndi/metagenomics_data/P160325/C-scripts/1aAF.txt
+
+while read tag; do
+  #map with bwa
+  /apps/well/bwa/0.7.12/bwa mem -M -t 2 /well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/bwa1aAFall/ref.fasta /well/jknight/cyndi/metagenomics_data/P160325/A-rawdata/fastq/WTCHG_296582_${tag}_1.fastq.gz /well/jknight/cyndi/metagenomics_data/P160325/A-rawdata/fastq/WTCHG_296582_${tag}_2.fastq.gz > /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/WTCHG_296582_${tag}.sam 
+  
+  #Sort and index
+  samtools view -u -S /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/WTCHG_296582_${tag}.sam | samtools sort - /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/WTCHG_296582_${tag}_sorted
+  samtools index /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/WTCHG_296582_${tag}_sorted.bam
+  
+done < /well/jknight/cyndi/metagenomics_data/P160325/C-scripts/1aAF.txt
