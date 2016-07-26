@@ -3,11 +3,13 @@ Pipeline
 Download files into required folder e.g. /well/jknight/cyndi/metagenomics_data/P160325/A-rawdata from FTP link
 wget ftp://tmitanar:atygo-minot-13@bsg-ftp.well.ox.ac.uk/160719_K00198_0079_BHFGFKBBXX/*
 
-(B) Mapping
+(B) Mapping (bwa1aHQ.sh or bwa1aAF.sh)
 Each pair of fastq files mapped to a sam file using bwa mem. Sam file then sorted and indexed, generating a _sorted.bam and _sorted.bam.bai file.
 NB HCV371, influenza and pneumococcus samples mapped to bwa1aHQall/ref.fasta and HCV958 mapped to bwa1aAFall/ref.fasta (These ref.fasta files contain human, ERCC, 3 plasmids + HCV)
 
-(C)
+(C) Use samtools to view number of reads
+samtoolsbwacluster.sh to run samtoolsbwamap.sh
+
 
 bwa1aHQ.sh
 #!/usr/bin/env bash
@@ -66,3 +68,42 @@ while read tag; do
   samtools index /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/WTCHG_296582_${tag}_sorted.bam
   
 done < /well/jknight/cyndi/metagenomics_data/P160325/C-scripts/1aAF.txt
+
+#Cluster script using samtools bitwise flags to calculate number of reads for the various reference genomes
+#samtoolsbwacluster.sh (runs samtoolsbwamap.sh below)
+#requires samplelist1aAF.txt or samplelist1aHQ.txt with the names of the indexes and corresponding reflist1aAF.txt or reflist1aHQ.txt
+
+#!/usr/bin/env bash
+#$ -cwd
+#$ -q short.qc
+#$ -P jknight.prjc
+#$ -N samtoolsbwacluster
+#$ -o /well/jknight/cyndi/qsub_logs
+#$ -e /well/jknight/cyndi/qsub_logs
+#$ -pe shmem 2
+
+# this export PATH is needed for samtools
+export PATH=/apps/well/samtools/0.1.19/bin:${PATH}
+export PATH=/usr/local/genetics/bin:${PATH}
+
+FILE=/well/jknight/cyndi/metagenomics_data/P160325/C-scripts/samplelist1aAF.txt
+
+while read line; do
+        /well/jknight/cyndi/metagenomics_data/P160325/C-scripts/samtoolsbwamap.sh /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/WTCHG_296582_${line}_sorted.bam > /well/jknight/cyndi/metagenomics_data/P160325/D-analysis/bwareadcount/${line}.txt
+done < /well/jknight/cyndi/metagenomics_data/P160325/C-scripts/samplelist1aAF.txt
+
+#samtoolsbwamap.sh
+#!/bin/bash
+
+inbamfile=${1}
+
+FILE=/well/jknight/cyndi/metagenomics_data/P160325/C-scripts/reflist1aAF.txt
+
+#NB F260 = F4 + 256 (counts reads mapped as primary alignment)
+while read reflocus; do
+  samtools view -c -F260 ${inbamfile} ${reflocus}
+done < /well/jknight/cyndi/metagenomics_data/P160325/C-scripts/reflist1aAF.txt
+
+samtools view -c -F256 ${inbamfile}
+
+samtools view -c -F260 ${inbamfile}
