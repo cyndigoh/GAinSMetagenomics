@@ -1,3 +1,14 @@
+Pipeline
+(A) Pre-processing
+Download files into required folder e.g. /well/jknight/cyndi/metagenomics_data/P160325/A-rawdata from FTP link
+wget ftp://tmitanar:atygo-minot-13@bsg-ftp.well.ox.ac.uk/160719_K00198_0079_BHFGFKBBXX/*
+
+(B) Mapping
+Each pair of fastq files mapped to a sam file using bwa mem. Sam file then sorted and indexed, generating a _sorted.bam and _sorted.bam.bai file.
+NB HCV371, influenza and pneumococcus samples mapped to bwa1aHQall/ref.fasta and HCV958 mapped to bwa1aAFall/ref.fasta (These ref.fasta files contain human, ERCC, 3 plasmids + HCV)
+
+(C)
+
 bwa1aHQ.sh
 #!/usr/bin/env bash
 #$ -cwd
