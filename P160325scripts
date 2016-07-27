@@ -107,3 +107,23 @@ done < /well/jknight/cyndi/metagenomics_data/P160325/C-scripts/reflist1aAF.txt
 samtools view -c -F256 ${inbamfile}
 
 samtools view -c -F260 ${inbamfile}
+
+#plasmidcluster.sh runs samtoolsplasmid.sh to count number of reads mapping to each plasmid fragment
+#!/usr/bin/env bash
+#$ -cwd
+#$ -q short.qc
+#$ -P jknight.prjc
+#$ -N plasmid
+#$ -o /well/jknight/cyndi/qsub_logs
+#$ -e /well/jknight/cyndi/qsub_logs
+#$ -pe shmem 2
+
+# this export PATH is needed for samtools
+export PATH=/apps/well/samtools/0.1.19/bin:${PATH}
+export PATH=/usr/local/genetics/bin:${PATH}
+
+FILE=/well/jknight/cyndi/metagenomics_data/P160325/C-scripts/samplelistall.txt
+
+while read line; do
+	/well/jknight/cyndi/metagenomics_data/P160325/C-scripts/samtoolsplasmid.sh /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/WTCHG_296582_${line}_sorted.bam > /well/jknight/cyndi/metagenomics_data/P160325/D-analysis/plasmidreadcount/${line}.txt
+done < /well/jknight/cyndi/metagenomics_data/P160325/C-scripts/samplelistall.txt
