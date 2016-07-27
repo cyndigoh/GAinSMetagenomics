@@ -1,11 +1,11 @@
-Script to run on cluster (kraken2.sh):
+#Script to run on cluster (kraken.sh):
 #!/usr/bin/env bash
 #$ -cwd
 #$ -q short.qc
 #$ -P jknight.prjc
-#$ -N exomes
-#$ -o /well/jknight/cyndi/exomes/qsub_logs
-#$ -e /well/jknight/cyndi/exomes/qsub_logs
+#$ -N kraken
+#$ -o /well/jknight/cyndi/qsub_logs
+#$ -e /well/jknight/cyndi/qsub_logs
 #$ -pe shmem 8
 
 export PATH=/apps/well/jellyfish/1.1.11/bin:/apps/well/kraken/20151209:${PATH}
@@ -14,25 +14,25 @@ export PATH=/apps/well/jellyfish/1.1.11/bin:/apps/well/kraken/20151209:${PATH}
 export PATH=/apps/well/samtools/0.1.19/bin:${PATH}
 export PATH=/usr/local/genetics/bin:${PATH}
 
-FILE=/well/jknight/cyndi/exomes/exomelist.txt
+FILE=/well/jknight/cyndi/metagenomics_data/P160325/C-scripts/samplelistsepsis.txt
 
 while read line; do
         #Extract paired unmapped reads from bamfile
-        samtools view -b -f13 /well/hill/kate/exomes/stampy/cap217/${line}.bam > /well/jknight/cyndi/exomes/${line}_unmapped.bam
+        samtools view -b -f13 /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/WTCHG_296582_${line}_sorted.bam > /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/unmappedreads/WTCHG_296582_${line}_unmappedreads.bam
 
         #Sort bamfile
-        samtools sort -n /well/jknight/cyndi/exomes/${line}_unmapped.bam /well/jknight/cyndi/exomes/${line}_unmapped.qsort
+        samtools sort -n /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/unmappedreads/WTCHG_296582_${line}_unmappedreads.bam /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/unmappedreads/WTCHG_296582_${line}_unmappedreads.qsort
 
         #Convert bamfile to pair of fastq's 
-        /apps/well/bedtools/2.24.0-18-gb0bc5b7/bin/bamToFastq -i /well/jknight/cyndi/exomes/${line}_unmapped.qsort.bam -fq /well/jknight/cyndi/exomes/${line}_unmappedR1.fastq -fq2 /well/jknight/cyndi/exomes/${line}_unmappedR2.fastq
+        /apps/well/bedtools/2.24.0-18-gb0bc5b7/bin/bamToFastq -i /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/unmappedreads/WTCHG_296582_${line}_unmappedreads.qsort.bam -fq /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/unmappedreads/WTCHG_296582_${line}_unmappedR1.fastq -fq2 /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/unmappedreads/WTCHG_296582_${line}_unmappedR2.fastq
 
         #Run kraken
-        /apps/well/kraken/20151209/kraken --db standard-db --threads 1 --preload --paired /well/jknight/cyndi/exomes/${line}_unmappedR1.fastq /well/jknight/cyndi/exomes/${line}_unmappedR2.fastq --output /well/jknight/cyndi/exomes/$$
+        /apps/well/kraken/20151209/kraken --db standard-db --threads 1 --preload --paired /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/unmappedreads/WTCHG_296582_${line}_unmappedR1.fastq /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/unmappedreads/WTCHG_296582_${line}_unmappedR2.fastq --output /well/jknight/cyndi/metagenomics_data_P160325/D-analysis/kraken/$$
 
         #Produce taxonomy report
-        /apps/well/kraken/20151209/kraken-report --db standard-db /well/jknight/cyndi/exomes/${line}.taxonomy > /well/jknight/cyndi/exomes/${line}.taxonomy.report
+        /apps/well/kraken/20151209/kraken-report --db standard-db /well/jknight/cyndi/metagenomics_data_P160325/D-analysis/kraken/${line}.taxonomy > /well/jknight/cyndi/metagenomics_data_P160325/D-analysis/kraken/${line}.taxonomy.report
 
-done < /well/jknight/cyndi/exomes/exomelist.txt
+done < /well/jknight/cyndi/metagenomics_data/P160325/C-scripts/samplelistsepsis.txt
 
 Commands (non-cluster):
 
