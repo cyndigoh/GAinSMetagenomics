@@ -1,9 +1,23 @@
 When plotting insert sizes, it is best to select a small proportion of the inserts since the data set is so large.
-Use Camilla's script randkeep.py
+Bash script to run Camilla's script randkeep.py for all samples in a list
+
+/well/jknight/cyndi/metagenomics_data/P160325/C-scripts/randkeepinsert.sh
+#!/bin/bash
+
+FILE=/well/jknight/cyndi/metagenomics_data/P160325/C-scripts/samplelistall.txt
+
+while read line; do
+	/well/jknight/cyndi/scripts/randkeep.py /well/jknight/cyndi/metagenomics_data/P160325/D-analysis/insertsize/{line}.txt 0.01 0 > /well/jknight/cyndi/metagenomics_data/P160325/D-analysis/insertsize/less/{line}.txt
+	
+done < /well/jknight/cyndi/metagenomics_data/P160325/C-scripts/samplelistall.txt
+
+
+
+
+#randkeep.py
 Usage: /well/jknight/cyndi/scripts/randkeep.py /well/jknight/cyndi/metagenomics_data/P160325/D-analysis/insertsize/703504.txt 0.1 0 > /well/jknight/cyndi/metagenomics_data/P160325/D-analysis/insertsize/less/703504.txt
 i.e. [path to script] [path to insert size file] [percentage of lines to select] [is there a header 0/1] > [path to output file]
 
-#randkeep.py
 #!/usr/bin/env python
 
 import gzip, os, random, sys
