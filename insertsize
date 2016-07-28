@@ -1,3 +1,40 @@
+When plotting insert sizes, it is best to select a small proportion of the inserts since the data set is so large.
+Use Camilla's script randkeep.py
+Usage: /well/jknight/cyndi/scripts/randkeep.py /well/jknight/cyndi/metagenomics_data/P160325/D-analysis/insertsize/703504.txt 0.1 0 > /well/jknight/cyndi/metagenomics_data/P160325/D-analysis/insertsize/less/703504.txt
+i.e. [path to script] [path to insert size file] [percentage of lines to select] [is there a header 0/1] > [path to output file]
+
+#randkeep.py
+#!/usr/bin/env python
+
+import gzip, os, random, sys
+
+if len(sys.argv) < 4:
+    print 'Usage: {0} txtfile pct hasheader'.format(os.path.basename(sys.argv[0]))
+    print '       Use a pseudo-random number generator to keep pct of the input text lines.'
+    print '       Note that since we make a decision to keep a line when we read it, the '
+    print '       final number of lines will only be approxmimately pct of the starting number of lines.'
+    print '       If txtfile is dash (\'-\') then it reads from stdin.'
+    print '       If the file ends in .gz it is assumed to be a gzipped file.'
+    print '       All output is written to stdout.'
+    sys.exit(1)
+
+txtfile = sys.argv[1]
+threshold = float(sys.argv[2])/100.0
+hasheader = int(sys.argv[3])
+
+with (sys.stdin if txtfile == '-' else (gzip.open(os.path.expandvars(txtfile), 'rb') if txtfile.endswith('gz') else open(txtfile, 'r'))) as in_fp:
+    linecnt = 0
+    for line in in_fp:
+        linecnt += 1
+        if linecnt == 1:
+            sys.stdout.write(line)
+        else:
+            if random.random() < threshold:
+                sys.stdout.write(line)
+if txtfile != '-':
+    in_fp.close()
+    
+
 #/well/jknight/cyndi/scripts/insertsize.sh
 
 #!/usr/bin/env bash
