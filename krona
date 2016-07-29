@@ -1,0 +1,15 @@
+Creating krona visualisations
+
+#Convert kraken output (.taxonomy NOT .taxonomy.report) to krona input
+cut -f2,3 707503.taxonomy > ./krona/707503.in
+
+#Obtain krona visualisation
+/apps/well/kronatools/2.6.1/bin/ktImportTaxonomy 707503.in -o 707503.out.html
+
+The out.html file can be visualised in safari
+
+Error messages
+   [ WARNING ]  The following taxonomy IDs were not found in the local database and were set to root (if they were recently added to NCBI, use updateTaxonomy.sh to update the local database):
+                710686
+Writing 707504.out.html...
+   [ WARNING ]  Too many query IDs to store in chart; storing supplemental files in '707504.out.html.files'.
