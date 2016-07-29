@@ -1,4 +1,5 @@
 #Script to run on cluster (kraken.sh):
+#Script to run on cluster (kraken.sh):
 #!/usr/bin/env bash
 #$ -cwd
 #$ -q short.qc
@@ -23,17 +24,17 @@ while read line; do
         #Sort bamfile
         samtools sort -n /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/unmappedreads/WTCHG_296582_${line}_unmappedreads.bam /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/unmappedreads/WTCHG_296582_${line}_unmappedreads.qsort
 
-        #Convert bamfile to pair of fastq's 
+        #Convert bamfile to pair of fastq's
         /apps/well/bedtools/2.24.0-18-gb0bc5b7/bin/bamToFastq -i /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/unmappedreads/WTCHG_296582_${line}_unmappedreads.qsort.bam -fq /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/unmappedreads/WTCHG_296582_${line}_unmappedR1.fastq -fq2 /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/unmappedreads/WTCHG_296582_${line}_unmappedR2.fastq
 
         #Run kraken
-        /apps/well/kraken/20151209/kraken --db standard-db --threads 1 --preload --paired /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/unmappedreads/WTCHG_296582_${line}_unmappedR1.fastq /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/unmappedreads/WTCHG_296582_${line}_unmappedR2.fastq --output /well/jknight/cyndi/metagenomics_data_P160325/D-analysis/kraken/$$
+        #/apps/well/kraken/20151209/kraken --db standard-db --threads 1 --preload --paired /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/unmappedreads/WTCHG_296582_${line}_unmappedR1.fastq /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/unmappedreads/WTCHG_296582_${line}_unmappedR2.fastq --output /well/jknight/cyndi/metagenomics_data/P160325/D-analysis/kraken/${line}.taxo
+nomy
 
         #Produce taxonomy report
-        /apps/well/kraken/20151209/kraken-report --db standard-db /well/jknight/cyndi/metagenomics_data_P160325/D-analysis/kraken/${line}.taxonomy > /well/jknight/cyndi/metagenomics_data_P160325/D-analysis/kraken/${line}.taxonomy.report
+        #/apps/well/kraken/20151209/kraken-report --db standard-db /well/jknight/cyndi/metagenomics_data/P160325/D-analysis/kraken/${line}.taxonomy > /well/jknight/cyndi/metagenomics_data/P160325/D-analysis/kraken/${line}.taxonomy.report
 
 done < /well/jknight/cyndi/metagenomics_data/P160325/C-scripts/samplelistsepsis.txt
-
 Commands (non-cluster):
 
 #Extract paired unmapped reads from bamfile
