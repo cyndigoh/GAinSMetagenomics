@@ -135,3 +135,10 @@ inbamfile=${1}
 for reflocus in "HBV_plasmid:2854-3658" "HBV_plasmid:1677-2853" "HBV_plasmid:3659-5306" "HBV_plasmid:5307-6820" "HBV_plasmid:1-1676" "HBV_plasmid:1-6820" "p2022_plasmid:680-1058" "p2022_plasmid:2941-3356" "p2022_plasmid:1-679" "p2022_plasmid:1059-2940" "p2022_plasmid:1-3356" "p1990_plasmid:1608-2008" "p1990_plasmid:2009-2596" "p1990_plasmid:2597-4392" "p1990_plasmid:4393-4808" "p1990_plasmid:1-1607" "p1990_plasmid:1-4808"; do
   samtools view -c -F260 ${inbamfile} ${reflocus}
 done
+
+# /well/jknight/cyndi/metagenomics_data/P160325/C-scripts/readdepthaug16.sh
+# usage: /well/jknight/cyndi/scripts/readdepthaug16.sh /well/jknight/cyndi/metagenomics_data/P160325/B-mapped/WTCHG_296582_703504_sorted.bam \
+	/well/jknight/cyndi/metagenomics_data/P160016/reference_genomes/HCV_closest_refs/1a_HQ850279short.fasta 1a_HQ850279 \
+	/well/jknight/cyndi/metagenomics_data/P160325/D-analysis/readdepth/703504.tsv
+# must be logged onto storage-bsg for this to work
+
