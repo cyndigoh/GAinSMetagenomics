@@ -1,8 +1,10 @@
 Creating krona visualisations
-
+Log on to storage-bsg
+From /well/jknight/cyndi/metagenomics_data/P160325/D-analysis/kraken
 #Convert kraken output (.taxonomy NOT .taxonomy.report) to krona input
 cut -f2,3 707503.taxonomy > ./krona/707503.in
 
+From /well/jknight/cyndi/metagenomics_data/P160325/D-analysis/kraken/krona
 #Obtain krona visualisation
 /apps/well/kronatools/2.6.1/bin/ktImportTaxonomy 707503.in -o 707503.out.html
 
