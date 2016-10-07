@@ -40,7 +40,7 @@ FILE=/well/jknight/cyndi/metagenomics_data/P160597/C-scripts/samplelistall.txt
 
 while read line; do
         #Extract paired unmapped reads from bamfile
-        samtools view -b -f13 /well/jknight/cyndi/metagenomics_data/P160597/A-rawdata/WTCHG_316348_${line}.bam > /well/jknight/cyndi/metagenomics_data/P160597/B-mapped/hiseq/unmappedreads/WTCHG_316348_${line}_unmappedreads.bam
+        samtools view -b -f13 /well/jknight/cyndi/metagenomics_data/P160597/A-rawdata/hiseq/WTCHG_316348_${line}.bam > /well/jknight/cyndi/metagenomics_data/P160597/B-mapped/hiseq/unmappedreads/WTCHG_316348_${line}_unmappedreads.bam
 
         #Sort bamfile
         samtools sort -n /well/jknight/cyndi/metagenomics_data/P160597/B-mapped/hiseq/unmappedreads/WTCHG_316348_${line}_unmappedreads.bam /well/jknight/cyndi/metagenomics_data/P160597/B-mapped/hiseq/unmappedreads/WTCHG_316348_${line}_unmappedreads.qsort
