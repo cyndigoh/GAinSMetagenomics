@@ -8,8 +8,6 @@ bwa.sh
 #$ -e /well/jknight/cyndi/qsub_logs
 #$ -pe shmem 2
 
-
-
 # this export PATH is needed for samtools
 export PATH=/apps/well/samtools/0.1.19/bin:${PATH}
 export PATH=/usr/local/genetics/bin:${PATH}
@@ -19,11 +17,11 @@ FILE=/well/jknight/cyndi/metagenomics_data/P160597/C-scripts/sepsis.txt
 
 while read tag; do
   #map with bwa
-  /apps/well/bwa/0.7.12/bwa mem -M -t 2 /well/jknight/cyndi/references/GRCh38/GCA_000001405.15_GRCh38_full_analysis_set.fna /well/jknight/cyndi/metagenomics_data/P160597/A-rawdata/fastq/WTCHG_316348_${tag}_1.fastq.gz /well/jknight/cyndi/metagenomics_data/P160597/A-rawdata/fastq/WTCHG_316348_${tag}_2.fastq.gz > /well/jknight/cyndi/metagenomics_data/P160597/B-mapped/WTCHG_316348_${tag}.sam 
+  /apps/well/bwa/0.7.12/bwa mem -M -t 2 /well/jknight/cyndi/references/GRCh38/GCA_000001405.15_GRCh38_full_analysis_set.fna /well/jknight/cyndi/metagenomics_data/P160597/A-rawdata/hiseq/fastq/WTCHG_316348_${tag}_1.fastq.gz /well/jknight/cyndi/metagenomics_data/P160597/A-rawdata/hiseq/fastq/WTCHG_316348_${tag}_2.fastq.gz > /well/jknight/cyndi/metagenomics_data/P160597/B-mapped/hiseq/WTCHG_316348_${tag}.sam 
   
   #Sort and index
-  samtools view -u -S /well/jknight/cyndi/metagenomics_data/P160597/B-mapped/WTCHG_316348_${tag}.sam | samtools sort - /well/jknight/cyndi/metagenomics_data/P160597/B-mapped/WTCHG_316348_${tag}_sorted
-  samtools index /well/jknight/cyndi/metagenomics_data/P160597/B-mapped/WTCHG_316348_${tag}_sorted.bam
+  samtools view -u -S /well/jknight/cyndi/metagenomics_data/P160597/B-mapped/hiseq/WTCHG_316348_${tag}.sam | samtools sort - /well/jknight/cyndi/metagenomics_data/P160597/B-mapped/hiseq/WTCHG_316348_${tag}_sorted
+  samtools index /well/jknight/cyndi/metagenomics_data/P160597/B-mapped/hiseq/WTCHG_316348_${tag}_sorted.bam
   
 done < /well/jknight/cyndi/metagenomics_data/P160597/C-scripts/sepsis.txt
 
