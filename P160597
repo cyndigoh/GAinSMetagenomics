@@ -25,6 +25,46 @@ while read tag; do
   
 done < /well/jknight/cyndi/metagenomics_data/P160597/C-scripts/sepsis.txt
 
+#Cluster script using samtools bitwise flags to calculate number of reads for the various reference genomes
+#samtoolsbwacluster.sh (runs samtoolsbwamap.sh below)
+#requires samplelist1aAF.txt or samplelist1aHQ.txt with the names of the indexes and corresponding reflist1aAF.txt or reflist1aHQ.txt
+
+#!/usr/bin/env bash
+#$ -cwd
+#$ -q short.qc
+#$ -P jknight.prjc
+#$ -N samtoolsbwacluster
+#$ -o /well/jknight/cyndi/qsub_logs
+#$ -e /well/jknight/cyndi/qsub_logs
+#$ -pe shmem 2
+
+# this export PATH is needed for samtools
+export PATH=/apps/well/samtools/0.1.19/bin:${PATH}
+export PATH=/usr/local/genetics/bin:${PATH}
+
+FILE=/well/jknight/cyndi/metagenomics_data/P160597/C-scripts/sepsis.txt
+
+while read line; do
+        /well/jknight/cyndi/metagenomics_data/P160597/C-scripts/samtoolsbwamap.sh /well/jknight/cyndi/metagenomics_data/P160597/B-mapped/hiseq/WTCHG_316348_${line}_sorted.bam > /well/jknight/cyndi/metagenomics_data/P160597/D-analysis/hiseq/bwareadcount/${line}.txt
+done < /well/jknight/cyndi/metagenomics_data/P160597/C-scripts/sepsis.txt
+
+#samtoolsbwamap.sh
+#!/bin/bash
+
+inbamfile=${1}
+
+FILE=/well/jknight/cyndi/metagenomics_data/P160597/C-scripts/reflist.txt
+
+#NB F260 = F4 + 256 (counts reads mapped as primary alignment)
+while read reflocus; do
+  samtools view -c -F260 ${inbamfile} ${reflocus}
+done < /well/jknight/cyndi/metagenomics_data/P160597/C-scripts/reflist.txt
+
+samtools view -c -F256 ${inbamfile}
+
+samtools view -c -F260 ${inbamfile}
+
+
 References
 Human
 /well/bsg/microbial/data/references/GRCh38/seqs_for_alignment_pipelines/GCA_000001405.15_GRCh38_full_analysis_set.fna.gz
