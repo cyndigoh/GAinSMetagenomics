@@ -1,0 +1,22 @@
+#countreads.sh
+
+#!/usr/bin/env bash
+#$ -cwd
+#$ -q short.qc
+#$ -P jknight.prjc
+#$ -N countreads
+#$ -o /well/jknight/cyndi/qsub_logs
+#$ -e /well/jknight/cyndi/qsub_logs
+#$ -pe shmem 2
+
+# this export PATH is needed for samtools
+export PATH=/apps/well/samtools/0.1.19/bin:${PATH}
+export PATH=/usr/local/genetics/bin:${PATH}
+
+FILE=/well/jknight/cyndi/metagenomics_data/P160597/C-scripts/sepsis.txt
+
+while read line; do
+        samtools view -c /well/jknight/cyndi/metagenomics_data/P160597/A-rawdata/hiseq/WTCHG_316348_${line}.bam
+        samtools view -c -f4 /well/jknight/cyndi/metagenomics_data/P160597/A-rawdata/hiseq/WTCHG_316348_${line}.bam
+        samtools view -c -F4 /well/jknight/cyndi/metagenomics_data/P160597/A-rawdata/hiseq/WTCHG_316348_${line}.bam
+done < /well/jknight/cyndi/metagenomics_data/P160597/C-scripts/sepsis.txt
