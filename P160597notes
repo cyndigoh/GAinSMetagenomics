@@ -9,3 +9,27 @@ the bam files in the main directory have been mapped (by me) using bwa-mem to th
 now 99.51% maps to the human genome
 note, because I used the -M option, this also includes supplementary alignments which means that the total number of reads is greater than in the HTG bam files
 
+Discrepancy with samtools view -c on bam files from core vs bam files following my mapping with bwa-mem
+
+From P160325 (WTCHG_296582_701503)
+TOTAL reads using samtools view -c
+original bam file: 28313706 reads (14156853 pairs)
+after mapping with bwa-mem: 28993228 reads
+  - samtools view -f256 -c 679522 reads
+  - samtools view -f2048 -c 0 reads
+  28993228 minus 679522 = 28313706 reads
+  
+From P1600597 (WTCHG_316348_205253)
+TOTAL reads using samtools view -c
+original bam file: 21298222 reads 
+after mapping with bwa-mem: 22572408 reads
+  - samtools view -f256 -c 1254478 reads
+  - samtools view -f2048 -c 19708 reads
+  22572408 minus (1254478 + 19708) = 21298222 reads
+  
+after mapping with bwa-mem (without the -M option): 22572408 reads
+  - samtools view -f256 -c 0 reads
+  - samtools view -f2048 -c 1274186 reads
+  22572408 minus 1274186 reads = 21298222 reads
+  
+filtering out the paired, unmapped reads (samtools view -f13) -> 73054 reads (same whether or not the -M option is used)
