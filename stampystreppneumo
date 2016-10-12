@@ -1,0 +1,15 @@
+/apps/well/stampy/1.0.23-py2.7/stampy.py \
+  --genome /well/jknight/cyndi/references/strep_pneumo/strep_pneumo \
+  --hash /well/jknight/cyndi/references/strep_pneumo/strep_pneumo \
+  --threads 2 \
+  --bamkeepgoodreads \
+  --substitutionrate=0.01 \
+  --map /well/jknight/cyndi/metagenomics_data/P160597/A-rawdata/hiseq/fastq/WTCHG_316348_205253_1.fastq.gz,/well/jknight/cyndi/metagenomics_data/P160597/A-rawdata/hiseq/fastq/WTCHG_316348_205253_2.fastq.gz \
+  --gapopen 40 \
+  --gapextend 40 \
+  --bamsortmem 200000000 \
+  --inputformat fastq \
+  --outputformat sam \
+  --output /well/jknight/cyndi/metagenomics_data/P160597/B-mapped/hiseq/strep/WTCHG_316348_205253.sam \
+  --overwrite
+done
