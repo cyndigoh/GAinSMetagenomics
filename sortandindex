@@ -4,15 +4,14 @@
 #$ -cwd
 #$ -q short.qc 
 #$ -P jknight.prjc
-#$ -N P160016_sortandindex
-#$ -o /well/jknight/cyndi/metagenomics_data/P160016/qsub_logs
-#$ -e /well/jknight/cyndi/metagenomics_data/P160016/qsub_logs
+#$ -N sortandindex
+#$ -o /well/jknight/cyndi/qsub_logs
+#$ -e /well/jknight/cyndi/qsub_logs
 #$ -pe shmem 2
 
-source ~/.bashrc
-sh /apps/well/profile.d/python/2.7.sh
+FILE=/well/jknight/cyndi/metagenomics_data/P160597/C-scripts/sort.txt
 
-for tag in "225104" "201225" "241104" "207249" "249273" "226104" "202226" "242104" "208250" "250274" "227104" "203227" "243104" "225251" "251275" "228104" "204228" "244104" "226252" "252276" "229104" "205229" "245104" "227253" "253277" "230104" "206230" "246104" "228254" "254278" "202104" "242226" "203104" "243227" "204104" "244228" "205104" "245229" "206104" "246230"; do
-  samtools view -u -S /well/jknight/cyndi/metagenomics_data/P160016/data2/maphuman/WTCHG_247272_${tag}.sam | samtools sort - /well/jknight/cyndi/metagenomics_data/P160016/data2/maphuman/WTCHG_247272_${tag}_sorted
-  samtools index /well/jknight/cyndi/metagenomics_data/P160016/data2/maphuman/WTCHG_247272_${tag}_sorted.bam
-done
+while read line; do
+  samtools view -u -S /well/jknight/cyndi/metagenomics_data/P160597/B-mapped/hiseq/strep/WTCHG_316348_${line}.sam | samtools sort - /well/jknight/cyndi/metagenomics_data/P160597/B-mapped/hiseq/strep/WTCHG_316348_${line}_sorted
+  samtools index /well/jknight/cyndi/metagenomics_data/P160597/B-mapped/hiseq/strep/WTCHG_316348_${line}_sorted.bam
+done < /well/jknight/cyndi/metagenomics_data/P160597/C-scripts/sort.txt
