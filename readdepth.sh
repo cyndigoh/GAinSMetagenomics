@@ -5,6 +5,25 @@
 #$ -q short.qc
 #$ -P jknight.prjc
 #$ -N runreaddepth.sh
+#$ -o /well/jknight/cyndi/qsub_logs
+#$ -e /well/jknight/cyndi/qsub_logs
+#$ -pe shmem 2
+
+FILE=/well/jknight/cyndi/metagenomics_data/P160597/C-scripts/samplelistall.txt
+
+while read line; do
+	/well/jknight/cyndi/metagenomics_data/P160597/B-mapped/hiseq/strep/WTCHG_316348_${line}_sorted.bam \
+	/well/jknight/cyndi/references/strep_pneumo/strep_pneumo.fasta "gi|220673408|emb|FM211187.1|" \
+	/well/jknight/cyndi/metagenomics_data/P160597/D-analysis/readdepth/${line}readdepth.tsv
+        
+
+done < /well/jknight/cyndi/metagenomics_data/P160597/C-scripts/samplelistall.txt
+
+#!/usr/bin/env bash
+#$ -cwd
+#$ -q short.qc
+#$ -P jknight.prjc
+#$ -N runreaddepth.sh
 #$ -o /well/jknight/cyndi/metagenomics_data/P160016/qsub_logs
 #$ -e /well/jknight/cyndi/metagenomics_data/P160016/qsub_logs
 #$ -pe shmem 2
