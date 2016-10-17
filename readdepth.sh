@@ -10,6 +10,10 @@
 #$ -e /well/jknight/cyndi/qsub_logs
 #$ -pe shmem 2
 
+# this export PATH is needed for samtools
+export PATH=/apps/well/samtools/0.1.19/bin:${PATH}
+export PATH=/usr/local/genetics/bin:${PATH}
+
 FILE=/well/jknight/cyndi/metagenomics_data/P160597/C-scripts/samplelistall.txt
 
 while read line; do
