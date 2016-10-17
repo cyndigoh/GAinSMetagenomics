@@ -13,7 +13,7 @@
 FILE=/well/jknight/cyndi/metagenomics_data/P160597/C-scripts/samplelistall.txt
 
 while read line; do
-	/well/jknight/cyndi/metagenomics_data/P160597/B-mapped/hiseq/strep/WTCHG_316348_${line}_sorted.bam \
+	/well/jknight/cyndi/metagenomics_data/P160597/C-scripts/readdepth.sh /well/jknight/cyndi/metagenomics_data/P160597/B-mapped/hiseq/strep/WTCHG_316348_${line}_sorted.bam \
 	/well/jknight/cyndi/references/strep_pneumo/strep_pneumo.fasta "gi|220673408|emb|FM211187.1|" \
 	/well/jknight/cyndi/metagenomics_data/P160597/D-analysis/readdepth/${line}readdepth.tsv
         
