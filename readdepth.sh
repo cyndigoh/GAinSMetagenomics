@@ -93,7 +93,7 @@ if [ $? -ne 0 ] ; then
     exit 2
 
 echo "./filtersam.py ${tmpsam1} ${refid} ${tmpsam2}"
-      ./filtersam.py ${tmpsam1} ${refid} ${tmpsam2}
+      /well/jknight/cyndi/metagenomics_data/P160597/C-scripts/filtersam.py ${tmpsam1} ${refid} ${tmpsam2}
 if [ $? -ne 0 ] ; then
     echo "Failed: ./filtersam.py ${tmpsam1} ${refid} ${tmpsam2}"
     exit 3
