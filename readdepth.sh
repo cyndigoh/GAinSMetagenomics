@@ -1,5 +1,6 @@
 #SCRIPT 1: runreaddepth.sh (Use this for running readdepth.sh)
 
+# Updated version for strep pneumo genome
 #!/usr/bin/env bash
 #$ -cwd
 #$ -q short.qc
@@ -19,6 +20,7 @@ while read line; do
 
 done < /well/jknight/cyndi/metagenomics_data/P160597/C-scripts/samplelistall.txt
 
+#Older version P160325 HCV genome
 #!/usr/bin/env bash
 #$ -cwd
 #$ -q short.qc
