@@ -9,6 +9,7 @@
 #$ -o /well/jknight/cyndi/qsub_logs
 #$ -e /well/jknight/cyndi/qsub_logs
 #$ -pe shmem 2
+#$ -V
 
 # this export PATH is needed for samtools
 export PATH=/apps/well/samtools/0.1.19/bin:${PATH}
