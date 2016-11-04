@@ -1,14 +1,19 @@
-#Script to run Stampy with fastq input
-#usage: ./stampy.sh samplelist.txt /well/jknight/cyndi/references/probes/probesall /well/jknight/cyndi/metagenomics_data/P160597/A-rawdata/pool2 /well/jknight/cyndi/metagenomics_data/P160597/B-mapped/pool2/probes
+#/well/jknight/cyndi/scripts/stampy/runstampy.sh
+#Script to run stampy.sh with fastq input
 #!/usr/bin/env bash
 #$ -cwd
 #$ -q short.qc
 #$ -P jknight.prjc
-#$ -N stampy
+#$ -N runstampy
 #$ -o /well/jknight/cyndi/qsub_logs
 #$ -e /well/jknight/cyndi/qsub_logs
 #$ -pe shmem 2
+#$ -V
 
+/well/jknight/cyndi/metagenomics_data/P160597/C-scripts/test/stampy.sh /well/jknight/cyndi/metagenomics_data/P160597/C-scripts/test/samplelist.txt /well/jknight/cyndi/references/probes/probesall /well/jknight/cyndi/metagenomics_data/P160597/A-rawdata/pool2 /well/jknight/cyndi/metagenomics_data/P160597/B-mapped/pool2/probes
+
+#/well/jknight/cyndi/scripts/stampy/stampy.sh
+#Script to run Stampy with fastq input
 # Defining the arguments
 samplelist=$1
 refgenome=$2
@@ -18,9 +23,6 @@ outputpath=$4
 # this export PATH is needed for samtools
 export PATH=/apps/well/samtools/0.1.19/bin:${PATH}
 export PATH=/usr/local/genetics/bin:${PATH}
-
-source ~/.bashrc
-sh /apps/well/profile.d/python/2.7.sh
 
 FILE=${samplelist}
 
