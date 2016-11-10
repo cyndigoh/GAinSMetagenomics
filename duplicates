@@ -13,4 +13,5 @@ java -Xmx2g -jar /apps/well/picard-tools/2.0.1/picard.jar MarkDuplicates \
 /apps/well/java/jdk1.8.0_latest/bin/java -jar /apps/well/picard-tools/2.0.1/picard.jar MarkDuplicates \
       I=/well/jknight/cyndi/metagenomics_data/P160597/B-mapped/hiseq/strep/WTCHG_316348_201249_sorted.bam \
       O=/well/jknight/cyndi/metagenomics_data/P160597/D-analysis/markduplicates/hiseq/strep/WTCHG_316348_201249_marked_duplicates.bam \
-      M=/well/jknight/cyndi/metagenomics_data/P160597/D-analysis/markduplicates/hiseq/strep/WTCHG_316348_201249_metrics.txt 
+      M=/well/jknight/cyndi/metagenomics_data/P160597/D-analysis/markduplicates/hiseq/strep/WTCHG_316348_201249_metrics.txt \
+      ASSUME_SORTED=true
