@@ -1,3 +1,12 @@
+samtools view for pathogen references and multi-fasta file
+
+This is the correct command:
+samtools view -c -F1028 WTCHG_315517_253277_marked_duplicates_sorted.bam "gi|220673408|emb|FM211187.1|"
+NB use of quotation marks and not "gi|220673408|emb|FM211187.1| Streptococcus etc etc"
+eachref.sh has been updated to reflect this
+
+
+
 23112016
 Picard Mark Duplicates output summary metrics file
 unpaired_reads_examined + 2*read_pairs_examined + unmapped_reads = total reads (-c flag)
