@@ -49,3 +49,5 @@ after mapping with bwa-mem (without the -M option): 22572408 reads
   22572408 minus 1274186 reads = 21298222 reads
   
 filtering out the paired, unmapped reads (samtools view -f13) -> 73054 reads (same whether or not the -M option is used)
+
+NB samtools view -F2048 -c gives you the total reads which when halved == total read pairs sequenced (same as the number that core gives)
